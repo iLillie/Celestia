@@ -1,0 +1,18 @@
+﻿name: Celestia Action
+
+on: push
+
+jobs: 
+  build:
+    name: Build Celestia
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Celestia
+        uses: actions/checkout@v3
+      - name: Build Api
+        run: dotnet build
+      - name: Check Api directory
+        run: ls Celestia.Api/ -R
+      - name: Check NPM Cli
+        run: npm -v
+        
