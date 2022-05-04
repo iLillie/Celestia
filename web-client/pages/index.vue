@@ -1,13 +1,12 @@
 <template>
   <div>
-    <a-button type="primary">
-      {{message}}
-    </a-button>
+    {{message}}
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Axios from 'axios';
 
 
 export default Vue.extend({
@@ -15,11 +14,11 @@ export default Vue.extend({
   data: () => ({
     message: ""
   }),
-  created() {
-    this.$axios.get('http://localhost:5000/api/home')
-      .then(({data}) => {
-        this.message = data;
-      })
-  }
+   asyncData(ctx: any): Promise<object | void> | object | void {
+     return Axios.get('http://localhost:5000/api/home')
+       .then(({data}) => {
+         return { message: data }
+       })
+   }
 })
 </script>
