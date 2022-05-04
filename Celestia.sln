@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celestia.Api", "Celestia.Api\Celestia.Api.csproj", "{ABEC4F1B-9525-46B1-8767-2FF4FA21FDD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Celestia.Models", "Celestia.Models\Celestia.Models.csproj", "{C9CEA7E5-D405-4859-A4E5-9A68BDD8AF8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{ABEC4F1B-9525-46B1-8767-2FF4FA21FDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABEC4F1B-9525-46B1-8767-2FF4FA21FDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABEC4F1B-9525-46B1-8767-2FF4FA21FDD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9CEA7E5-D405-4859-A4E5-9A68BDD8AF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9CEA7E5-D405-4859-A4E5-9A68BDD8AF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9CEA7E5-D405-4859-A4E5-9A68BDD8AF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9CEA7E5-D405-4859-A4E5-9A68BDD8AF8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
