@@ -1,8 +1,16 @@
 <template>
   <div>
-    {{message}}
+    <Sidebar></Sidebar>
   </div>
 </template>
+
+<style>
+  body {
+    background-color: #FCFAF4;
+  }
+
+
+</style>
 
 <script lang="ts">
 import Vue from 'vue'

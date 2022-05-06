@@ -12,7 +12,9 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { href: 'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css', rel: 'stylesheet'},
+      { href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap', rel: 'stylesheet'}
     ]
   },
 
