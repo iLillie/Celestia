@@ -1,12 +1,29 @@
 <template>
-  <div>
-    <Sidebar></Sidebar>
+  <div class="flex">
+    <Sidebar/>
+    <main class="p-8 grid main gap-8 content-start overflow-y-auto">
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+      <AdvertItem/>
+    </main>
   </div>
 </template>
 
 <style>
   body {
-    background-color: #FCFAF4;
+    background-color: #F7F7F8;
+  }
+
+  .main {
+    justify-items: start;
+    justify-content: start;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
 
@@ -19,14 +36,5 @@ import Axios from 'axios';
 
 export default Vue.extend({
   name: 'IndexPage',
-  data: () => ({
-    message: ""
-  }),
-   asyncData(ctx: any): Promise<object | void> | object | void {
-     return Axios.get('http://localhost:5000/api/home')
-       .then(({data}) => {
-         return { message: data }
-       })
-   }
 })
 </script>

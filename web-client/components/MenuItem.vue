@@ -35,12 +35,12 @@ export default {
 
 <style scoped>
   a {
-    transition: background-color 500ms ease-in-out;
-    @apply flex bg-transparent gap-2.5 p-4 font-sans items-center text-lg font-medium text-gray-600;
+    transition: background-color 300ms ease-in-out;
+    @apply flex bg-transparent gap-2.5 p-4 font-sans items-center text-lg font-medium text-gray-600 rounded;
   }
 
   a:hover {
-    @apply bg-gray-300;
+    @apply bg-gray-200;
   }
 
   .collapse {
