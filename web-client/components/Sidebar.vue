@@ -24,43 +24,19 @@
       </button>
     </header>
     <nav>
-      <MenuList>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-home-line">
-          Oversikt
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-clipboard-line">
-          Aktiviteter
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-file-copy-2-line">
-          Filer
-        </MenuItem>
-      </MenuList>
+      <ul class="list">
+        <MenuItem v-for="item in defaultItems" :linkItem="item" :key="item.id" />
+      </ul>
     </nav>
     <nav>
-      <MenuList>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-briefcase-3-line">
-          Stillinger
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-building-2-line">
-          Selskaper
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-contacts-book-2-line">
-          Kontakter
-        </MenuItem>
-      </MenuList>
+      <ul class="list">
+        <MenuItem v-for="item in jobItems" :linkItem="item" :key="item.id"/>
+      </ul>
     </nav>
     <nav>
-      <MenuList>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-folder-open-line">
-          Frontend
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-folder-open-line">
-          Backend
-        </MenuItem>
-        <MenuItem :collapse="isCollapsed" href="#" icon="ri-folder-open-line">
-          Full-Stack
-        </MenuItem>
-      </MenuList>
+      <ul class="list">
+        <MenuItem v-for="item in mapItems" :linkItem="item" :key="item.id" />
+      </ul>
     </nav>
   </section>
 </template>
@@ -71,7 +47,22 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
+      mapItems: [
+        { id: 0, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Frontend'},
+        { id: 1, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Backend'},
+        { id: 2, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Full-Stack'},
+      ],
+      jobItems: [
+        { id: 3, href: '#', target: '', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
+        { id: 4, href: '#', target: '', icon: 'ri-building-2-line', text: 'Selskaper'},
+        { id: 5, href: '#', target: '', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
+      ],
+      defaultItems: [
+        { id: 6, href: '#', target: '', icon: 'ri-home-line', text: 'Oversikt'},
+        { id: 7, href: '#', target: '', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
+        { id: 8, href: '#', target: '', icon: 'ri-file-copy-2-line', text: 'Filer'},
+      ]
 
     }
   },
@@ -84,6 +75,11 @@ export default {
 </script>
 
 <style scoped>
+
+.list {
+  @apply grid gap-4;
+}
+
 .side-header {
   @apply flex py-8 px-2 justify-between;
 }

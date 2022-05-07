@@ -1,9 +1,9 @@
 ﻿<template>
   <li class="li-item">
-    <a :href="href" :target="target" >
-      <span :class="icon"></span>
-      <div  :class="{ collapse: collapse}">
-        <slot/>
+    <a :href="linkItem.href" :target="linkItem.target" >
+      <span :class="linkItem.icon"></span>
+      <div  :class="{ collapse:  this.$parent.isCollapsed}">
+        <p>{{linkItem.text}}</p>
       </div>
     </a>
   </li>
@@ -13,22 +13,7 @@
 export default {
   name: "MenuItem",
   props: {
-    icon: {
-      type: String,
-      default: ""
-    },
-    href: {
-      type: String,
-      default: ""
-    },
-    target: {
-      type: String,
-      default: ""
-    },
-    collapse: {
-      type: Boolean,
-      default: false
-    }
+    linkItem: Object
   }
 }
 </script>
