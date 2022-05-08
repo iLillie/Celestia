@@ -1,5 +1,5 @@
 <template>
-  <section :class="{ collapsed: isCollapsed }" class="horizontal-nav">
+  <aside :aria-expanded="(!isCollapsed).toString()" :class="{ collapsed: isCollapsed }" class="horizontal-nav">
     <header :class="{'side-header-collapsed': isCollapsed }" class="side-header">
       <svg :class="{ 'collapsed-logo': isCollapsed }" width="95" height="24" viewBox="0 0 95 24" fill="none"
            xmlns="http://www.w3.org/2000/svg">
@@ -23,22 +23,15 @@
         <span class="ri-menu-line"></span>
       </button>
     </header>
-    <nav>
-      <ul class="list">
-        <MenuItem v-for="item in defaultItems" :linkItem="item" :key="item.id" />
-      </ul>
+    <nav aria-label="Sidebar">
+      <div v-for="navigationList in sidebar.navigationLists">
+        <p>{{navigationList.name}}</p>
+          <ul class="list">
+            <MenuItem v-for="item in navigationList.items" :linkItem="item" :key="item.id"/>
+          </ul>
+      </div>
     </nav>
-    <nav>
-      <ul class="list">
-        <MenuItem v-for="item in jobItems" :linkItem="item" :key="item.id"/>
-      </ul>
-    </nav>
-    <nav>
-      <ul class="list">
-        <MenuItem v-for="item in mapItems" :linkItem="item" :key="item.id" />
-      </ul>
-    </nav>
-  </section>
+  </aside>
 </template>
 
 <script>
@@ -48,22 +41,37 @@ export default {
   data() {
     return {
       isCollapsed: false,
-      mapItems: [
-        { id: 0, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Frontend'},
-        { id: 1, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Backend'},
-        { id: 2, href: '#', target: '', icon: 'ri-folder-open-line', text: 'Full-Stack'},
-      ],
-      jobItems: [
-        { id: 3, href: '#', target: '', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
-        { id: 4, href: '#', target: '', icon: 'ri-building-2-line', text: 'Selskaper'},
-        { id: 5, href: '#', target: '', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
-      ],
-      defaultItems: [
-        { id: 6, href: '#', target: '', icon: 'ri-home-line', text: 'Oversikt'},
-        { id: 7, href: '#', target: '', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
-        { id: 8, href: '#', target: '', icon: 'ri-file-copy-2-line', text: 'Filer'},
-      ]
-
+      sidebar: {
+        navigationLists: [
+          {
+            name: "Main",
+            ariaLabel: "Sidebar Main",
+            items: [
+              {id: 0, href: '/a', target: '_self', icon: 'ri-home-line', text: 'Oversikt'},
+              {id: 1, href: '/b', target: '_self', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
+              {id: 2, href: '/c', target: '_self', icon: 'ri-file-copy-2-line', text: 'Filer'},
+            ]
+          },
+          {
+            name: "Job",
+            ariaLabel: "Sidebar Job",
+            items: [
+              {id: 3, href: '/d', target: '_self', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
+              {id: 4, href: '/e', target: '_self', icon: 'ri-building-2-line', text: 'Selskaper'},
+              {id: 5, href: '/f', target: '_self', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
+            ]
+          },
+          {
+            name: "Folders",
+            ariaLabel: "Sidebar Folders",
+            items: [
+              {id: 6, href: '/g', target: '_self', icon: 'ri-folder-open-line', text: 'Frontend'},
+              {id: 7, href: '/h', target: '_self', icon: 'ri-folder-open-line', text: 'Backend'},
+              {id: 8, href: '/j', target: '_self', icon: 'ri-folder-open-line', text: 'Full-Stack'},
+            ]
+          },
+        ],
+      },
     }
   },
   methods: {

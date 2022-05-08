@@ -17,14 +17,10 @@
     justify-content: start;
     grid-template-columns: 1fr 1fr 1fr;
   }
-
-
 </style>
 
 <script lang="ts">
 import Vue from 'vue'
-import Axios from 'axios';
-
 
 export default Vue.extend({
   name: 'IndexPage',
