@@ -1,67 +1,29 @@
 <template>
-  <article class=" gap p-4 bg-white w-96 font-sans rounded-md" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
-    <div class="cover">
-      <img class="w-full" :src="advert.image" alt="">
+  <article class="bg-white p-4 w-96 rounded-md drop-shadow transition ease-in-out hover:scale-105">
+    <div class="grid place-items-center aspect-video">
+      <img :src="advert.image" alt="" class="h-full mx-auto object-contain p-4">
     </div>
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-col gap-1">
-        <div class="flex justify-between">
-          <h2 class="title text-xl font-sans tracking-wide font-medium">{{advert.title}}</h2>
-          <button><span class="ri-more-fill text-2xl"></span></button>
-        </div>
-        <p>{{advert.company}}</p>
-      </div>
-      <p class="description">{{advert.description}}</p>
+    <div class="flex justify-between items-center">
+      <h2 class="max-w-ch-6 font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+        {{ advert.title }}
+      </h2>
+      <button aria-label="details">
+        <span class="ri-more-fill text-2xl"></span>
+      </button>
     </div>
+    <h3>
+      {{ advert.company }}
+    </h3>
+    <p class="line-clamp-2 text-ellipsis overflow-hidden mt-2">
+      {{ advert.description }}
+    </p>
   </article>
 </template>
 
 <script>
 export default {
-  name: "AdvertItem",
   props: {
     advert: Object
   }
 }
 </script>
-
-<style scoped>
-  article {
-    transition: 200ms ease-in-out;
-  }
-  article:hover {
-    transform: scale(103%);
-
-  }
-
-  .title {
-    max-width: 21ch;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .description {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .cover {
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1 / 1;
-  }
-
-  img {
-    margin-inline: auto;
-    object-fit: cover;
-
-    max-height: 65%;
-    max-width: 65%;
-    padding: 1rem;
-  }
-
-</style>
