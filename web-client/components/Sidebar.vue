@@ -48,7 +48,7 @@ export default {
             name: "Main",
             ariaLabel: "Sidebar Main",
             items: [
-              {id: 0, href: '/a', icon: 'ri-home-line', text: 'Oversikt'},
+              {id: 0, href: '/', icon: 'ri-home-line', text: 'Oversikt'},
               {id: 1, href: '/b', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
               {id: 2, href: '/c', icon: 'ri-file-copy-2-line', text: 'Filer'},
             ]
@@ -57,7 +57,7 @@ export default {
             name: "Job",
             ariaLabel: "Sidebar Job",
             items: [
-              {id: 3, href: '/d', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
+              {id: 3, href: '/stillinger', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
               {id: 4, href: '/e', icon: 'ri-building-2-line', text: 'Selskaper'},
               {id: 5, href: '/f', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
             ]
