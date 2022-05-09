@@ -1,7 +1,7 @@
 <template>
   <aside :aria-expanded="(!isCollapsed).toString()" :class="{ collapsed: isCollapsed }" class="horizontal-nav">
     <header :class="{'side-header-collapsed': isCollapsed }" class="side-header">
-      <svg :class="{ 'collapsed-logo': isCollapsed }" width="95" height="24" viewBox="0 0 95 24" fill="none"
+      <svg :class="{ 'collapsed-vanished': isCollapsed }" width="95" height="24" viewBox="0 0 95 24" fill="none"
            xmlns="http://www.w3.org/2000/svg">
         <path d="M30.9589 4.79622V1.26635H17.3427V4.79622H21.988V14.0551H26.3849V4.79622H30.9589Z" fill="#2C2C2C"/>
         <path d="M0 1.24272V4.74175H4.26975V20.2023H0V23.6859H12.9788V20.2023H8.60116V4.74175H12.9788V1.24272H0Z"
@@ -23,12 +23,13 @@
         <span class="ri-menu-line"></span>
       </button>
     </header>
-    <nav aria-label="Sidebar">
+    <nav class="flex flex-col gap-8" aria-label="Sidebar">
       <div v-for="navigationList in sidebar.navigationLists">
-        <p class="font-sans font-semibold px-4 py-2 text-gray-600">{{navigationList.name}}</p>
-          <ul class="list">
-            <MenuItem v-for="item in navigationList.items" :linkItem="item" :key="item.id"/>
-          </ul>
+        <p :class="{ 'collapsed-centered': isCollapsed }" class="font-sans font-semibold px-4 py-2 text-gray-600">
+          {{ navigationList.name }}</p>
+        <ul class="list">
+          <MenuItem v-for="item in navigationList.items" :linkItem="item" :key="item.id"/>
+        </ul>
       </div>
     </nav>
   </aside>
@@ -109,9 +110,15 @@ export default {
 
 .collapsed {
   width: min-content;
+  @apply px-8;
 }
 
-.collapsed-logo {
+.collapsed-centered {
+  text-align: center;
+  padding-inline: 0;
+}
+
+.collapsed-vanished {
   display: none;
 }
 </style>
