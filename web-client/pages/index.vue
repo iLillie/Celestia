@@ -1,10 +1,7 @@
 <template>
-  <div class="flex">
-    <Sidebar/>
-    <main class="p-8 grid main gap-8 content-start overflow-y-auto">
+    <main class="p-8 grid main gap-8 content-start overflow-y-auto max-w-min">
       <AdvertItem v-for="advert in adverts" :advert="advert" :key="advert.id"></AdvertItem>
     </main>
-  </div>
 </template>
 
 <style>

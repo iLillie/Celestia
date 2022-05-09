@@ -25,7 +25,7 @@
     </header>
     <nav aria-label="Sidebar">
       <div v-for="navigationList in sidebar.navigationLists">
-        <p>{{navigationList.name}}</p>
+        <p class="font-sans font-semibold px-4 py-2 text-gray-600">{{navigationList.name}}</p>
           <ul class="list">
             <MenuItem v-for="item in navigationList.items" :linkItem="item" :key="item.id"/>
           </ul>
@@ -47,27 +47,27 @@ export default {
             name: "Main",
             ariaLabel: "Sidebar Main",
             items: [
-              {id: 0, href: '/a', target: '_self', icon: 'ri-home-line', text: 'Oversikt'},
-              {id: 1, href: '/b', target: '_self', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
-              {id: 2, href: '/c', target: '_self', icon: 'ri-file-copy-2-line', text: 'Filer'},
+              {id: 0, href: '/a', icon: 'ri-home-line', text: 'Oversikt'},
+              {id: 1, href: '/b', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
+              {id: 2, href: '/c', icon: 'ri-file-copy-2-line', text: 'Filer'},
             ]
           },
           {
             name: "Job",
             ariaLabel: "Sidebar Job",
             items: [
-              {id: 3, href: '/d', target: '_self', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
-              {id: 4, href: '/e', target: '_self', icon: 'ri-building-2-line', text: 'Selskaper'},
-              {id: 5, href: '/f', target: '_self', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
+              {id: 3, href: '/d', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
+              {id: 4, href: '/e', icon: 'ri-building-2-line', text: 'Selskaper'},
+              {id: 5, href: '/f', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
             ]
           },
           {
             name: "Folders",
             ariaLabel: "Sidebar Folders",
             items: [
-              {id: 6, href: '/g', target: '_self', icon: 'ri-folder-open-line', text: 'Frontend'},
-              {id: 7, href: '/h', target: '_self', icon: 'ri-folder-open-line', text: 'Backend'},
-              {id: 8, href: '/j', target: '_self', icon: 'ri-folder-open-line', text: 'Full-Stack'},
+              {id: 6, href: '/g', icon: 'ri-folder-open-line', text: 'Frontend'},
+              {id: 7, href: '/h', icon: 'ri-folder-open-line', text: 'Backend'},
+              {id: 8, href: '/j', icon: 'ri-folder-open-line', text: 'Full-Stack'},
             ]
           },
         ],
