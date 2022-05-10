@@ -84,26 +84,16 @@ export default {
   },
   computed: {
     sidebarClass() {
-      return {
-        'px-8 w-min': this.isCollapsed,
-        'clamped-width': !this.isCollapsed
-      }
+      return this.isCollapsed ? 'px-8 w-min' : 'clamped-width';
     },
     headerClass() {
-      return {
-        'justify-center': this.isCollapsed,
-        'justify-between': !this.isCollapsed
-      }
+      return this.isCollapsed ? 'justify-center' : 'justify-between';
     },
     logoClass() {
-      return {
-        'hidden': this.isCollapsed
-      }
+      return this.isCollapsed ? 'hidden' : '';
     },
     nameClass() {
-      return {
-        'text-center px-0': this.isCollapsed
-      }
+      return this.isCollapsed ? 'text-center px-0' : '';
     }
   },
   methods: {

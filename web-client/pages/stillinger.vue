@@ -1414,7 +1414,6 @@ export default Vue.extend({
         && doc.hasOwnProperty("company_name")
         && doc.hasOwnProperty("heading")
       ) {
-
         adverts.push({
           id: id,
           title: doc.job_title,
@@ -1424,8 +1423,6 @@ export default Vue.extend({
         });
         id += 1;
       }
-
-
     })
     return {adverts};
   },
