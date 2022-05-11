@@ -1,6 +1,6 @@
 <template>
   <article class="w-full">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between text-xl font-medium text-gray-800">
       <p>{{title}}</p>
       <IconButton :icon="collapsedIcon" @onClick="collapsed()"/>
     </div>
@@ -14,7 +14,7 @@
 export default {
   name: "Dropdown",
   props: {
-    title: 'Example'
+    title: ''
   },
   data() {
     return {

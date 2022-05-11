@@ -1,5 +1,5 @@
 <template>
-  <ol class="list-none p-0 flex gap-4">
+  <ol class="list-none p-0 flex gap-2">
     <li v-for="item in items">
       {{item}}
     </li>
@@ -9,12 +9,8 @@
 <script>
 export default {
   name: "Breadcrumbs",
-  data() {
-    return {
-      items: [
-        "Stillinger", "/" , "S-01"
-      ]
-    }
+  props: {
+    items: Array
   }
 }
 </script>

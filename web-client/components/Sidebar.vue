@@ -29,7 +29,7 @@
 
     <nav aria-label="sidebar" class="flex flex-col gap-8">
       <div v-for="navigationList in sidebar.navigationLists">
-        <p :class="nameClass" class="font-semibold px-4 py-2 text-gray-600">
+        <p :class="nameClass" class="font-semibold px-4 py-2 text-gray-600 hidden">
           {{ navigationList.name }}
         </p>
         <ul class="grid gap-4">
@@ -52,30 +52,22 @@ export default {
       sidebar: {
         navigationLists: [
           {
-            name: "Main",
-            ariaLabel: "Sidebar Main",
+            name: "Hoved",
+            ariaLabel: "Sidebar Hoved",
             items: [
               {id: 0, href: '/', icon: 'ri-home-line', text: 'Oversikt'},
-              {id: 1, href: '/b', icon: 'ri-clipboard-line', text: 'Aktiviteter'},
-              {id: 2, href: '/c', icon: 'ri-file-copy-2-line', text: 'Filer'},
+              {id: 1, href: '/stillinger', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
+              {id: 2, href: '/e', icon: 'ri-building-2-line', text: 'Selskaper'},
+              {id: 3, href: '/f', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
             ]
           },
           {
-            name: "Job",
-            ariaLabel: "Sidebar Job",
+            name: "Favoritter",
+            ariaLabel: "Sidebar Favoritter",
             items: [
-              {id: 3, href: '/stillinger', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
-              {id: 4, href: '/e', icon: 'ri-building-2-line', text: 'Selskaper'},
-              {id: 5, href: '/f', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
-            ]
-          },
-          {
-            name: "Folders",
-            ariaLabel: "Sidebar Folders",
-            items: [
-              {id: 6, href: '/g', icon: 'ri-folder-open-line', text: 'Frontend'},
-              {id: 7, href: '/h', icon: 'ri-folder-open-line', text: 'Backend'},
-              {id: 8, href: '/j', icon: 'ri-folder-open-line', text: 'Full-Stack'},
+              {id: 4, href: '/g', icon: 'ri-folder-open-line', text: 'Frontend'},
+              {id: 5, href: '/h', icon: 'ri-folder-open-line', text: 'Backend'},
+              {id: 6, href: '/j', icon: 'ri-folder-open-line', text: 'Full-Stack'},
             ]
           },
         ],
@@ -109,6 +101,6 @@ export default {
 /* is used in computed, but IDE doesn't recognize it */
 /* TODO: Add into config? */
 .clamped-width {
-  width: clamp(15rem, 17vw + 1rem, 20rem);
+  width: clamp(14rem, 17vw + 1rem, 20rem);
 }
 </style>
