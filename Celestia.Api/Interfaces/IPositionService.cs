@@ -4,7 +4,7 @@ namespace Celestia.Api.Interfaces;
 
 public interface IPositionService
 {
-    public Task<IEnumerable<Position>> All(Ulid accountId);
+    public Task<IEnumerable<Position>> All(Guid accountId);
 
-    public Task<Position> Get(Ulid positionId, Ulid accountId);
+    public Task<Position> Get(Guid positionId, Guid accountId);
 }

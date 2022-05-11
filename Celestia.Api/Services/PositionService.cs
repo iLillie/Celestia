@@ -16,12 +16,12 @@ public class PositionService : IPositionService
 
     public async Task<IEnumerable<Position>> All(Guid accountId)
     {
-        return await _applicationDbContext.Positions.Where(pos => pos.AccountId.Equals(accountId)).ToListAsync();
+        return await _applicationDbContext.Positions.Where(pos => pos.AuthorId.Equals(accountId)).ToListAsync();
     }
 
     public async Task<Position> Get(Guid positionId, Guid accountId)
     {
-        return await _applicationDbContext.Positions.Where(pos => pos.AccountId.Equals(accountId))
+        return await _applicationDbContext.Positions.Where(pos => pos.AuthorId.Equals(accountId))
             .Where(pos => pos.Id == positionId)
             .FirstAsync();
     }

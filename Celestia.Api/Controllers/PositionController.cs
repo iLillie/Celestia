@@ -16,13 +16,13 @@ public class PositionController : ControllerBase
     }
     
     [HttpGet("all/{accountId}")]
-    public async Task<IEnumerable<Position>> All(Ulid accountId)
+    public async Task<IEnumerable<Position>> All(Guid accountId)
     {
         return await _positionService.All(accountId);
     }
 
     [HttpGet("{id}/{accountId}")]
-    public async Task<Position> Get(Ulid id, Ulid accountId)
+    public async Task<Position> Get(Guid id, Guid accountId)
     {
         return await _positionService.Get(id, accountId);
     }

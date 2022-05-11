@@ -21,8 +21,8 @@ public class AccountService : IAccountService
         return newAccount;
     }
     
-    public async Task<Account> Get(Ulid accountId)
+    public async Task<Account> Get(Guid accountId)
     {
-        return await _applicationDbContext.Accounts.Where(pos => pos.Id.Equals(accountId)).FirstAsync();
+        return await _applicationDbContext.Accounts.Where(account => account.Id.Equals(accountId)).FirstAsync();
     }
 }
