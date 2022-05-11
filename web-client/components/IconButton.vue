@@ -1,5 +1,5 @@
 <template>
-  <button class="text-gray-600 text-xl p-2 leading-none rounded hover:bg-slate-50 hover:text-gray-800"
+  <button class="text-gray-600 text-lg p-2 leading-none rounded hover:bg-slate-50 hover:text-gray-800"
           :class="{ 'icon-shadow': hasShadow}" @click="$emit('onClick')">
     <span :class="icon"></span>
   </button>

@@ -26,6 +26,7 @@ import { mapMutations } from 'vuex'
 export default Vue.extend({
   name: 'Stillinger',
   mounted() {
+    if(this.adverts.length > 0) return;
     let advertsFinn:any = {
       "docs": [
         {

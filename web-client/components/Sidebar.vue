@@ -22,9 +22,7 @@
           d="M87.1993 2.91329H82.9141V6.99807H79.1068V10.158H82.9141V17.7418C82.9141 18.8414 83.058 19.7868 83.3457 20.578C83.6335 21.359 84.0445 22.0013 84.5789 22.5048C85.1029 23.0186 85.7349 23.3988 86.4748 23.6455C87.225 23.8818 88.0573 24 88.9719 24C89.4446 24 89.9225 23.9743 90.4055 23.9229C90.8987 23.8818 91.3714 23.8202 91.8236 23.738C92.2757 23.6557 92.7022 23.553 93.103 23.4297C93.5037 23.2961 93.8531 23.1419 94.1511 22.9672L93.7349 20.0231C93.5397 20.0745 93.3033 20.1259 93.0259 20.1773C92.7587 20.2286 92.471 20.2749 92.1627 20.316C91.8441 20.3674 91.5101 20.4085 91.1608 20.4393C90.8216 20.4701 90.4877 20.4855 90.1588 20.4855C89.7067 20.4855 89.2956 20.4342 88.9257 20.3314C88.566 20.2286 88.2577 20.0539 88.0008 19.8073C87.7439 19.571 87.5435 19.2524 87.3997 18.8516C87.2661 18.4406 87.1993 17.9319 87.1993 17.3256V10.158H93.4267V6.99807H87.1993V2.91329Z"
           fill="#FC9A06"/>
       </svg>
-      <button :aria-expanded="isExpanded.toString()" aria-controls="sidebar" aria-label="Expand sidebar" v-on:click="collapse()">
-        <span class="ri-menu-line"></span>
-      </button>
+      <IconButton icon="ri-menu-line" :aria-expanded="isExpanded.toString()" aria-controls="sidebar" aria-label="Expand sidebar" @onClick="collapse()"/>
     </header>
 
     <nav aria-label="sidebar" class="flex flex-col gap-8">
@@ -47,7 +45,6 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      isCollapsed: false,
       isExpanded: true,
       sidebar: {
         navigationLists: [
@@ -57,17 +54,17 @@ export default {
             items: [
               {id: 0, href: '/', icon: 'ri-home-line', text: 'Oversikt'},
               {id: 1, href: '/stillinger', icon: 'ri-briefcase-3-line', text: 'Stillinger'},
-              {id: 2, href: '/e', icon: 'ri-building-2-line', text: 'Selskaper'},
-              {id: 3, href: '/f', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
+              {id: 2, href: '/selskaper', icon: 'ri-building-2-line', text: 'Selskaper'},
+              {id: 3, href: '/kontakter', icon: 'ri-contacts-book-2-line', text: 'Kontakter'},
             ]
           },
           {
             name: "Favoritter",
             ariaLabel: "Sidebar Favoritter",
             items: [
-              {id: 4, href: '/g', icon: 'ri-folder-open-line', text: 'Frontend'},
-              {id: 5, href: '/h', icon: 'ri-folder-open-line', text: 'Backend'},
-              {id: 6, href: '/j', icon: 'ri-folder-open-line', text: 'Full-Stack'},
+              {id: 4, href: '/frontend', icon: 'ri-folder-open-line', text: 'Frontend'},
+              {id: 5, href: '/backend', icon: 'ri-folder-open-line', text: 'Backend'},
+              {id: 6, href: '/full', icon: 'ri-folder-open-line', text: 'Full-Stack'},
             ]
           },
         ],
@@ -75,6 +72,9 @@ export default {
     }
   },
   computed: {
+    isCollapsed() {
+      return this.$store.state.sidebar.isCollapsed;
+    },
     sidebarClass() {
       return this.isCollapsed ? 'px-8 w-min' : 'clamped-width';
     },
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     collapse: function () {
-      this.isCollapsed = !this.isCollapsed;
+      this.$store.commit("sidebar/update");
       this.isExpanded = !this.isCollapsed;
     }
   }

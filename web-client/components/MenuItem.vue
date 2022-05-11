@@ -1,12 +1,12 @@
 ﻿<template>
   <li class="font-medium text-lg text-gray-600">
-    <a :class="[activeLink, collapsedLink]"
-       class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out hover:bg-gray-200" :href="linkItem.href">
+    <NuxtLink :to="linkItem.href" :class="[activeLink, collapsedLink]"
+              class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out hover:bg-gray-200">
       <span :class="linkItem.icon"></span>
       <div v-if="!this.$parent.isCollapsed" class="">
         <p>{{ linkItem.text }}</p>
       </div>
-    </a>
+    </NuxtLink>
   </li>
 </template>
 
