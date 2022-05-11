@@ -1,6 +1,7 @@
 <template>
   <main class="p-8 grid main gap-8 content-start overflow-y-auto max-w-min">
-    <AdvertItem v-for="advert in adverts" :advert="advert" :key="advert.id"></AdvertItem>
+    <AdvertModal @closeModal="() => CloseModal()" v-if="modalOpen"></AdvertModal>
+    <AdvertItem v-for="advert in adverts" @openModal="() => OpenModal()" :advert="advert" :key="advert.id"></AdvertItem>
   </main>
 </template>
 
@@ -1426,5 +1427,18 @@ export default Vue.extend({
     })
     return {adverts};
   },
+  data() {
+    return {
+      modalOpen: false
+    }
+  },
+  methods: {
+    OpenModal() {
+      this.modalOpen = !this.modalOpen;
+    },
+    CloseModal() {
+      this.modalOpen = false;
+    }
+  }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <article class="bg-white p-4 w-96 rounded-md drop-shadow transition ease-in-out hover:scale-105">
+  <article class="bg-white z-0 p-4 w-96 rounded-md drop-shadow transition ease-in-out hover:scale-105">
     <div class="grid place-items-center aspect-video">
       <img :src="advert.image" alt="" class="h-full mx-auto object-contain p-4">
     </div>
@@ -7,7 +7,7 @@
       <h2 class="max-w-ch-6 font-medium text-ellipsis whitespace-nowrap overflow-hidden">
         {{ advert.title }}
       </h2>
-      <button aria-label="details">
+      <button @click="$emit('openModal')" aria-label="details">
         <span class="ri-more-fill text-2xl"></span>
       </button>
     </div>
