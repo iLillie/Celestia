@@ -1,14 +1,27 @@
-﻿namespace Celestia.Models;
+﻿using Celestia.Models.Abstractions;
 
-public class Position
+namespace Celestia.Models;
+
+public class Position : BaseModel
 {
-    public Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public string? Status { get; set; }
+    public string? Offer { get; set; }
     public PositionState State { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Deadline { get; set; }
+    
+    public Guid CompanyId { get; set; }
+    public Company? Company { get; set; }
 
-    public Guid AccountId { get; set; }
-    public Account? Account { get; set; }
+    
+    
+    public enum PositionState
+    {
+        Todo,
+        Progress,
+        Completed,
+        Offer,
+        Denied,
+        Archived
+    }
 }

@@ -9,7 +9,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Celestia.Data\Celestia.Data.csproj" />
       <ProjectReference Include="..\Celestia.Models\Celestia.Models.csproj" />
-      <ProjectReference Include="..\Celestia.Model\Celestia.Model.csproj" />
     </ItemGroup>
 
 </Project>
