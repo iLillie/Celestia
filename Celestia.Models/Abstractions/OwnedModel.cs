@@ -2,6 +2,6 @@
 
 public class OwnedModel : BaseModel
 {
-    public Guid? AuthorId { get; set; }
+    public int AuthorId { get; set; }
     public Account Author { get; set; }
 }

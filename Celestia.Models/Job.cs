@@ -13,6 +13,6 @@ public class Job : OwnedModel
     public JobStatus Status { get; set; }
     public Address? Address { get; set; }
     public List<Tag>? Tags { get; set; }
-    public Guid JobBoardId { get; set; }
+    public int? JobBoardId { get; set; }
     public JobBoard JobBoard { get; set; }
 }

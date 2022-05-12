@@ -10,6 +10,6 @@ public class Contact : OwnedModel
     public string? Email { get; set; } = string.Empty;
     public string? AdditionalNotes { get; set; } = string.Empty;
     
-    public Guid CompanyId { get; set; }
+    public int? CompanyId { get; set; }
     public Company? Company { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Celestia.Models;
+﻿using Celestia.Data.Configurations;
+using Celestia.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
@@ -25,12 +26,15 @@ public class ApplicationDbContext : DbContext
     {
         _connectionString = connectionString;
     }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseNpgsql(_connectionString).UseSnakeCaseNamingConvention();
+    {
+        options.UseNpgsql(_connectionString).UseSnakeCaseNamingConvention(); 
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountEntityTypeConfiguration).Assembly);
         base.OnModelCreating(modelBuilder);
         modelBuilder.UseIdentityColumns();
     }
