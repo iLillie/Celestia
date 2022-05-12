@@ -11,4 +11,14 @@
       <ProjectReference Include="..\Celestia.Models\Celestia.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers" />
+      <Folder Include="Interfaces" />
+      <Folder Include="Services" />
+    </ItemGroup>
+
 </Project>

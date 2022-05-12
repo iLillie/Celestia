@@ -20,22 +20,8 @@ public class ApplicationDbContext : DbContext
         _connectionString = connectionString;
     }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder
-            .Entity<Position>()
-            .Property(entity => entity.State)
-            .HasConversion(
-                value => value.ToString(),
-                value => (Position.PositionState)Enum.Parse(typeof(Position.PositionState), value));
-    }
-    
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseNpgsql(_connectionString);
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<Position> Positions { get; set; }
-    public DbSet<AdvertPost> AdvertPosts { get; set; }
-    public DbSet<Company> Companies { get; set; }
 }
 
 public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
