@@ -25,9 +25,9 @@ public class JobBoardService : IJobBoardService
 
         if (jobBoard is null) return null;
 
-        var accountDto = new JobBoardDto(jobBoard);
+        var jobBoardDto = new JobBoardDto(jobBoard);
 
-        return accountDto;
+        return jobBoardDto;
     }
 
     public async Task<IEnumerable<JobBoardDto>> ListAsync()
