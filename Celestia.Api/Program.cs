@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IJobBoardService, JobBoardService>();
+builder.Services.AddScoped<IJobService, JobService>();
 var app = builder.Build();
 
 

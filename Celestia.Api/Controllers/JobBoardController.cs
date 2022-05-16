@@ -23,7 +23,7 @@ public class JobBoardController : ControllerBase
         return Ok(jobs);
     }
 
-    [HttpGet("{id}", Name = "Get")]
+    [HttpGet("{id}", Name = "GetJobBoardById")]
     public async Task<ActionResult<JobBoardDto>> Get(int id)
     {
         var account = await _jobBoardService.GetAsync(id);
@@ -45,7 +45,7 @@ public class JobBoardController : ControllerBase
         }
 
         var jobBoard = await _jobBoardService.Create(creationDto);
-        return CreatedAtRoute("Get", new { id = jobBoard.Id }, new JobBoardDto(jobBoard));
+        return CreatedAtRoute("GetJobBoardById", new { id = jobBoard.Id }, new JobBoardDto(jobBoard));
     }
     
     [HttpPut("{id}")]

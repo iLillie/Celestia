@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Celestia.Data\Celestia.Data.csproj"/>
-        <ProjectReference Include="..\Celestia.Models\Celestia.Models.csproj"/>
+        <ProjectReference Include="..\Celestia.Data\Celestia.Data.csproj" />
+        <ProjectReference Include="..\Celestia.Models\Celestia.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     </ItemGroup>
 
 </Project>
