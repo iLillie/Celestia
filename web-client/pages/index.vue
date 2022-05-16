@@ -1,12 +1,12 @@
 <template>
-    <main class="">
-    </main>
+  <main class="">
+  </main>
 </template>
 
 <style>
-  body {
-    background-color: #F7F7F8;
-  }
+body {
+  background-color: #F7F7F8;
+}
 
 </style>
 

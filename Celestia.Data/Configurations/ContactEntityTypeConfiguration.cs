@@ -29,6 +29,5 @@ public class ContactEntityTypeConfiguration : IEntityTypeConfiguration<Contact>
         builder
             .Property(c => c.AdditionalNotes)
             .HasMaxLength(2000);
-        
     }
 }

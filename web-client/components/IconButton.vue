@@ -1,6 +1,6 @@
 <template>
-  <button class="text-gray-600 text-lg p-2 leading-none rounded hover:bg-slate-50 hover:text-gray-800"
-          :class="{ 'icon-shadow': hasShadow}" @click="$emit('onClick')">
+  <button :class="{ 'icon-shadow': hasShadow}"
+          class="text-gray-600 text-lg p-2 leading-none rounded hover:bg-slate-50 hover:text-gray-800" @click="$emit('onClick')">
     <span :class="icon"></span>
   </button>
 </template>
@@ -11,7 +11,8 @@ export default {
   props: {
     icon: '',
     onclick: {
-      type: () => {}
+      type: () => {
+      }
     },
     hasShadow: false
   }
@@ -19,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-  .icon-shadow {
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 0px 3px rgba(0, 0, 0, 0.05);
-  }
+.icon-shadow {
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 0px 3px rgba(0, 0, 0, 0.05);
+}
 </style>

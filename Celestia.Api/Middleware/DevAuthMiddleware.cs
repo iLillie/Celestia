@@ -8,7 +8,7 @@ public class DevAuthMiddleware
     {
         _next = next;
     }
-    
+
     public async Task InvokeAsync(HttpContext context)
     {
         var accountId = context.Request.Query["accountId"];
@@ -17,6 +17,7 @@ public class DevAuthMiddleware
             await _next(context);
             return;
         }
+
         await _next(context);
     }
 }

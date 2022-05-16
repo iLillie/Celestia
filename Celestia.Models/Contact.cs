@@ -9,7 +9,7 @@ public class Contact : OwnedModel
     public string? Phone { get; set; } = string.Empty;
     public string? Email { get; set; } = string.Empty;
     public string? AdditionalNotes { get; set; } = string.Empty;
-    
+
     public int? CompanyId { get; set; }
     public Company? Company { get; set; }
 }

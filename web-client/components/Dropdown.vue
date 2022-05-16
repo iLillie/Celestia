@@ -1,12 +1,12 @@
 <template>
   <article class="w-full">
     <div class="flex items-center justify-between text-xl font-medium text-gray-800">
-      <p>{{title}}</p>
+      <p>{{ title }}</p>
       <IconButton :icon="collapsedIcon" @onClick="collapsed()"/>
     </div>
-      <div class="" v-if="!isCollapsed">
-        <slot/>
-      </div>
+    <div v-if="!isCollapsed" class="">
+      <slot/>
+    </div>
   </article>
 </template>
 

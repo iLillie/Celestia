@@ -7,5 +7,5 @@ public enum JobStatus
     Declined,
     Offer,
     Completed,
-    Archived,
+    Archived
 }

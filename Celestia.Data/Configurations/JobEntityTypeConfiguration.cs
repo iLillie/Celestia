@@ -14,7 +14,7 @@ public class JobEntityTypeConfiguration : IEntityTypeConfiguration<Job>
             .Property(j => j.Title)
             .HasMaxLength(100)
             .IsRequired();
-        
+
         builder
             .Property(j => j.Description)
             .HasMaxLength(5000)
@@ -23,11 +23,11 @@ public class JobEntityTypeConfiguration : IEntityTypeConfiguration<Job>
         builder
             .Property(j => j.PostingUrl)
             .HasMaxLength(2000);
-        
+
         builder
             .Property(j => j.ApplicationUrl)
             .HasMaxLength(2000);
-        
+
         builder
             .Property(j => j.AdditionalNotes)
             .HasMaxLength(2000);
@@ -44,7 +44,7 @@ public class JobEntityTypeConfiguration : IEntityTypeConfiguration<Job>
             .HasOne(j => j.JobBoard)
             .WithMany(a => a.Jobs)
             .HasForeignKey(j => j.JobBoardId);
-        
+
         builder
             .HasOne(j => j.Author)
             .WithMany(a => a.Jobs)

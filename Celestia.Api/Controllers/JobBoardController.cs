@@ -1,5 +1,5 @@
 ﻿using Celestia.Api.Interfaces;
-using Celestia.Models;
+using Celestia.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -12,16 +12,19 @@ public class JobBoardController : ControllerBase
 
     public JobBoardController(IJobBoardService jobBoardService)
     {
-        this._jobBoardService = jobBoardService;
+        _jobBoardService = jobBoardService;
     }
+
     [HttpGet]
-    public string Get()
+    public async Task<ActionResult<IEnumerable<JobBoardDto>>> Get()
     {
-        return "API Test";
+        var jobs = await _jobBoardService.ListAsync();
+        if (!jobs.Any()) return NotFound();
+        return Ok(jobs);
     }
-    
+
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<ActionResult<JobBoardDto>> Get(int id)
     {
         var account = await _jobBoardService.GetAsync(id);
         if (account == null) return NotFound();

@@ -4,25 +4,25 @@
       <article :class="updateHeight" class="grid bg-white p-8 w-1/3 z-20 rounded-md gap-2 max-h-50vh overflow-y-auto">
         <div class="flex items-center justify-between">
           <Breadcrumbs :items="['Stillinger', '/', `S-${advert.id}`]"/>
-          <IconButton icon="ri-close-fill" @onClick="$emit('closeModal')" />
+          <IconButton icon="ri-close-fill" @onClick="$emit('closeModal')"/>
         </div>
 
         <div class="flex items-center justify-between">
           <h3 class="text-3xl leading-none font-semibold">{{ advert.title }}</h3>
           <div class="flex gap-2">
-            <IconButton :has-shadow="true" icon="ri-pencil-fill" @onClick="$emit('closeModal')" />
-            <IconButton :has-shadow="true" icon="ri-more-fill" @onClick="$emit('closeModal')" />
+            <IconButton :has-shadow="true" icon="ri-pencil-fill" @onClick="$emit('closeModal')"/>
+            <IconButton :has-shadow="true" icon="ri-more-fill" @onClick="$emit('closeModal')"/>
           </div>
         </div>
 
-        <a class="text-blue-400 underline hover:text-blue-600" :href="advert.adLink" target="_blank">
+        <a :href="advert.adLink" class="text-blue-400 underline hover:text-blue-600" target="_blank">
           {{ advert.adLink }}
         </a>
         <Dropdown title="Detaljer">
           <div class="grid ">
             <div class="flex">
               <p class="w-24">Selskap</p>
-              <p class="text-lg">{{advert.company}}</p>
+              <p class="text-lg">{{ advert.company }}</p>
             </div>
             <div class="flex">
               <p class="w-24">Status</p>
@@ -30,11 +30,11 @@
             </div>
             <div class="flex">
               <p class="w-24">Frist</p>
-              <p class="text-lg">{{toDateString(advert.deadline)}}</p>
+              <p class="text-lg">{{ toDateString(advert.deadline) }}</p>
             </div>
             <div class="flex">
               <p class="w-24">Sted</p>
-              <p class="text-lg">{{advert.location}}</p>
+              <p class="text-lg">{{ advert.location }}</p>
             </div>
             <div class="flex">
               <p class="w-24">Lønn</p>
@@ -44,7 +44,8 @@
         </Dropdown>
         <Dropdown title="Beskrivelse">
           <p class="max-w-lg leading-normal ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id donec massa faucibus nunc viverra et feugiat tristique. Dolor vel,
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id donec massa faucibus nunc viverra et feugiat
+            tristique. Dolor vel,
             purus tristique egestas quis nulla aliquam ultrices amet.
             Tempor viverra ornare vitae elementum accumsan. At ornare nisl, elementum hendrerit at proin. Id et.
           </p>
@@ -81,9 +82,9 @@ export default {
   },
   methods: {
     toDateString(unix) {
-      if(unix === undefined) return "Snarest";
+      if (unix === undefined) return "Snarest";
       const date = new Date(unix);
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const options = {year: 'numeric', month: 'long', day: 'numeric'};
       return date.toLocaleDateString('no-NB', options);
     }
   },
@@ -99,6 +100,7 @@ export default {
 .max-h-50vh {
   max-height: 80vh;
 }
+
 .icon-shadow {
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2), 0px 0px 3px rgba(0, 0, 0, 0.05);
 }

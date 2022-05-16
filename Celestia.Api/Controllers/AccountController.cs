@@ -1,5 +1,5 @@
 ﻿using Celestia.Api.Interfaces;
-using Celestia.Models;
+using Celestia.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -12,18 +12,19 @@ public class AccountController : ControllerBase
 
     public AccountController(IAccountService accountService)
     {
-        this._accountService = accountService;
+        _accountService = accountService;
     }
+
     [HttpGet]
     public string Get()
     {
         return "API Test";
     }
-    
-    [HttpGet("{Id}")]
-    public async Task<IActionResult> Get(int Id)
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AccountDto>> Get(int id)
     {
-        var account = await _accountService.GetAsync(Id);
+        var account = await _accountService.GetAsync(id);
         if (account == null) return NotFound();
         return Ok(account);
     }

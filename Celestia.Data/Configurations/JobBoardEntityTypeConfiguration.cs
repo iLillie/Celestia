@@ -14,7 +14,7 @@ public class JobBoardEntityTypeConfiguration : IEntityTypeConfiguration<JobBoard
             .Property(j => j.Name)
             .HasMaxLength(80)
             .IsRequired();
-        
+
         builder
             .HasOne(j => j.Author)
             .WithMany(a => a.JobBoards)

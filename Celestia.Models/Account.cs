@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Celestia.Models.Abstractions;
+﻿using Celestia.Models.Abstractions;
 
 namespace Celestia.Models;
 
@@ -13,12 +12,12 @@ public class Account : BaseModel
     public string? ImageUrl { get; set; }
 
     public Address? Address { get; set; }
-    
+
     public List<JobBoard>? JobBoards { get; set; }
-    
+
     public List<Job>? Jobs { get; set; }
-    
+
     public List<Contact>? Contacts { get; set; }
-    
+
     public List<Company>? Companies { get; set; }
 }

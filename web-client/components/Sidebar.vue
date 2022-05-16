@@ -4,7 +4,7 @@
          class="bg-white h-screen shadow-md p-4 flex flex-col gap-8 overflow-y-auto sticky top-0">
 
     <header :class="headerClass" class="flex py-8 px-2 ">
-      <svg aria-label="it jakt" :class="logoClass" fill="none" height="24" viewBox="0 0 95 24" width="95"
+      <svg :class="logoClass" aria-label="it jakt" fill="none" height="24" viewBox="0 0 95 24" width="95"
            xmlns="http://www.w3.org/2000/svg">
         <path d="M30.9589 4.79622V1.26635H17.3427V4.79622H21.988V14.0551H26.3849V4.79622H30.9589Z" fill="#2C2C2C"/>
         <path d="M0 1.24272V4.74175H4.26975V20.2023H0V23.6859H12.9788V20.2023H8.60116V4.74175H12.9788V1.24272H0Z"
@@ -22,7 +22,8 @@
           d="M87.1993 2.91329H82.9141V6.99807H79.1068V10.158H82.9141V17.7418C82.9141 18.8414 83.058 19.7868 83.3457 20.578C83.6335 21.359 84.0445 22.0013 84.5789 22.5048C85.1029 23.0186 85.7349 23.3988 86.4748 23.6455C87.225 23.8818 88.0573 24 88.9719 24C89.4446 24 89.9225 23.9743 90.4055 23.9229C90.8987 23.8818 91.3714 23.8202 91.8236 23.738C92.2757 23.6557 92.7022 23.553 93.103 23.4297C93.5037 23.2961 93.8531 23.1419 94.1511 22.9672L93.7349 20.0231C93.5397 20.0745 93.3033 20.1259 93.0259 20.1773C92.7587 20.2286 92.471 20.2749 92.1627 20.316C91.8441 20.3674 91.5101 20.4085 91.1608 20.4393C90.8216 20.4701 90.4877 20.4855 90.1588 20.4855C89.7067 20.4855 89.2956 20.4342 88.9257 20.3314C88.566 20.2286 88.2577 20.0539 88.0008 19.8073C87.7439 19.571 87.5435 19.2524 87.3997 18.8516C87.2661 18.4406 87.1993 17.9319 87.1993 17.3256V10.158H93.4267V6.99807H87.1993V2.91329Z"
           fill="#FC9A06"/>
       </svg>
-      <IconButton icon="ri-menu-line" :aria-expanded="isExpanded.toString()" aria-controls="sidebar" aria-label="Expand sidebar" @onClick="collapse()"/>
+      <IconButton :aria-expanded="isExpanded.toString()" aria-controls="sidebar" aria-label="Expand sidebar"
+                  icon="ri-menu-line" @onClick="collapse()"/>
     </header>
 
     <nav aria-label="sidebar" class="flex flex-col gap-8">

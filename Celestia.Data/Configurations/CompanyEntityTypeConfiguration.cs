@@ -8,7 +8,6 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
-
         builder.ToTable("companies");
 
         builder
@@ -24,7 +23,7 @@ public class CompanyEntityTypeConfiguration : IEntityTypeConfiguration<Company>
             .Property(c => c.HomepageUrl)
             .HasMaxLength(2000)
             .IsRequired();
-        
+
         builder
             .Property(c => c.LogoUrl)
             .HasMaxLength(2000)

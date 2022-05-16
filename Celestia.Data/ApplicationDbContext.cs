@@ -10,26 +10,28 @@ public class ApplicationDbContext : DbContext
 {
     private readonly string _connectionString;
 
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<Company> Companies { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-    public DbSet<JobBoard> JobBoards { get; set; }
-    public DbSet<Job> Jobs { get; set; }
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IOptions<PostgresConfiguration> postgreConfiguration)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
+        IOptions<PostgresConfiguration> postgreConfiguration)
         : base(options)
     {
         _connectionString = postgreConfiguration.Value.ConnectionString!;
     }
-    
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, string connectionString)
         : base(options)
     {
         _connectionString = connectionString;
     }
 
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<Contact> Contacts { get; set; }
+    public DbSet<JobBoard> JobBoards { get; set; }
+    public DbSet<Job> Jobs { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseNpgsql(_connectionString).UseSnakeCaseNamingConvention(); 
+        options.UseNpgsql(_connectionString).UseSnakeCaseNamingConvention();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,5 +52,4 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
             .UseSnakeCaseNamingConvention();
         return new ApplicationDbContext(optionsBuilder.Options, args[0]);
     }
-    
 }

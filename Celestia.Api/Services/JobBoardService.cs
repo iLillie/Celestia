@@ -2,7 +2,6 @@
 using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Celestia.Api.Services;
@@ -13,27 +12,33 @@ public class JobBoardService : IJobBoardService
 
     public JobBoardService(ApplicationDbContext context)
     {
-        this._context = context;
+        _context = context;
     }
-    
-    public async Task<JobBoardDTO?> GetAsync(int id)
+
+    public async Task<JobBoardDto?> GetAsync(int id)
     {
-        
-        JobBoard? jobBoard = await _context.JobBoards
+        var jobBoard = await _context.JobBoards
             .Where(j => j.Id == id)
             .Include(j => j.Jobs)
             .FirstOrDefaultAsync();
+
         if (jobBoard is null) return null;
-        var accountDto = new JobBoardDTO(jobBoard);
+
+        var accountDto = new JobBoardDto(jobBoard);
+
         return accountDto;
     }
 
-    public Task<IEnumerable<JobBoardDTO>> ListAsync()
+    public async Task<IEnumerable<JobBoardDto>> ListAsync()
     {
-        throw new NotImplementedException();
+        var jobBoards = await _context.JobBoards
+            .Include(j => j.Jobs).ToListAsync();
+
+        return jobBoards.Select(jB => new JobBoardDto(jB));
     }
 
-    public Task<IActionResult> AddJob(Job job)
+
+    public Task AddJob(Job job)
     {
         throw new NotImplementedException();
     }

@@ -7,7 +7,7 @@
       <h2 class="max-w-ch-6 text-xl font-medium text-ellipsis whitespace-nowrap overflow-hidden">
         {{ advert.title }}
       </h2>
-      <button @click="openModal(advert.id)" aria-label="details">
+      <button aria-label="details" @click="openModal(advert.id)">
         <span class="ri-more-fill text-2xl"></span>
       </button>
     </div>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-  .clamped-width {
-    width: clamp(20rem, 20vw + 1rem, 22.5rem);
-  }
+.clamped-width {
+  width: clamp(20rem, 20vw + 1rem, 22.5rem);
+}
 </style>

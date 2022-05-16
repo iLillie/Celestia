@@ -15,8 +15,8 @@ export default {
 </script>
 
 <style scoped>
-  .grid-container {
-    display: grid;
-    grid-template-columns: auto 1fr;
-  }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
 </style>
