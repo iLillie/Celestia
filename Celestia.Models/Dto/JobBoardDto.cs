@@ -1,4 +1,4 @@
-﻿namespace Celestia.Models.DTO;
+﻿namespace Celestia.Models.Dto;
 
 public class JobBoardDto
 {

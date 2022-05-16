@@ -11,7 +11,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
-;
 builder.Services.AddCors(options => options.AddPolicy("All", build => build.AllowAnyHeader()
     .AllowAnyOrigin()
     .AllowAnyMethod()));

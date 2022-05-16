@@ -1,6 +1,6 @@
 ﻿using Celestia.Api.Interfaces;
 using Celestia.Data;
-using Celestia.Models.DTO;
+using Celestia.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace Celestia.Api.Services;

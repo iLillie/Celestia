@@ -1,7 +1,8 @@
 ﻿using Celestia.Api.Interfaces;
 using Celestia.Data;
 using Celestia.Models;
-using Celestia.Models.DTO;
+using Celestia.Models.Dto;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Celestia.Api.Services;
@@ -37,9 +38,21 @@ public class JobBoardService : IJobBoardService
         return jobBoards.Select(jB => new JobBoardDto(jB));
     }
 
-
-    public Task AddJob(Job job)
+    public async Task<JobBoard> Create(JobBoardCreationDto creationDto)
     {
-        throw new NotImplementedException();
+        var jobBoard = new JobBoard(creationDto);
+        await _context.JobBoards.AddAsync(jobBoard);
+        await _context.SaveChangesAsync();
+        return jobBoard;
+    }
+
+    public async Task<JobBoard?> Update(int id, JobBoardUpdateDto updateDto)
+    {
+        var jobBoard = await _context.JobBoards.FirstOrDefaultAsync(j => j.Id == id);
+        if (jobBoard is null) return null;
+        jobBoard.Update(updateDto);
+        _context.JobBoards.Update(jobBoard);
+        await _context.SaveChangesAsync();
+        return jobBoard;
     }
 }

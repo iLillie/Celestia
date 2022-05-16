@@ -1,4 +1,4 @@
-﻿using Celestia.Models.DTO;
+﻿using Celestia.Models.Dto;
 
 namespace Celestia.Api.Interfaces;
 

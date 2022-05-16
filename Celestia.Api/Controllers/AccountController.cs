@@ -1,10 +1,10 @@
 ﻿using Celestia.Api.Interfaces;
-using Celestia.Models.DTO;
+using Celestia.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
 
-[Route("/api/[controller]")]
+[Route("/api/account")]
 [ApiController]
 public class AccountController : ControllerBase
 {

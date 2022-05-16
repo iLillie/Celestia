@@ -1,6 +1,6 @@
 ﻿using Celestia.Models.Utilities;
 
-namespace Celestia.Models.DTO;
+namespace Celestia.Models.Dto;
 
 public class JobDto
 {
