@@ -1,8 +1,6 @@
 ﻿using Celestia.Api.Interfaces;
 using Celestia.Data;
 using Celestia.Models;
-using Celestia.Models.Dto;
-using Microsoft.EntityFrameworkCore;
 
 namespace Celestia.Api.Services;
 
@@ -10,41 +8,39 @@ namespace Celestia.Api.Services;
 
 public class JobService : IJobService
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public JobService(ApplicationDbContext dbContext)
+    public JobService(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<JobDto>> GetAllAsync()
+    public async Task<IEnumerable<Job>> GetAllAsync() 
+        => await _unitOfWork.JobRepository.GetAllAsync();
+
+    public async Task<Job?> GetAsync(int id)
+        => await _unitOfWork.JobRepository.GetAsync(id);
+
+    public async Task<Job> AddAsync(Job value)
     {
-        return await _dbContext.Jobs.Select(j => new JobDto(j)).ToListAsync();;
+        value.Id = 0;
+        await _unitOfWork.JobRepository.AddAsync(value);
+        await _unitOfWork.Complete();
+        return value;
     }
 
-    public async Task<JobDto?> GetAsync(int id)
+    public async Task<bool> Delete(int id)
     {
-        var job = await _dbContext.Jobs.FindAsync(id);
+        var job = await _unitOfWork.JobRepository.GetAsync(id);
+        if (job is null) return false;
+        _unitOfWork.JobRepository.Delete(job);
+        return await _unitOfWork.Complete();
+    }
 
-        if (job is null) return null;
+    public async Task<bool> UpdateAsync(int id, Job value)
+    {
+        _unitOfWork.JobRepository.Update(value);
         
-        return new JobDto(job);
-    }
-
-    public async Task<Job> AddAsync(JobDto jobDto)
-    {
-        var job = Job.MapDto(jobDto);
-        await _dbContext.Jobs.AddAsync(job);
-        await _dbContext.SaveChangesAsync();
-        return job;
-    }
-    public void Remove() {}
-
-    public async Task UpdateAsync(int id, JobDto jobDto)
-    { 
-        var job = await _dbContext.Jobs.FirstAsync(j => j.Id == id);
-        job.Update(jobDto);
-        _dbContext.Jobs.Update(job);
-        await _dbContext.SaveChangesAsync();
+        return await _unitOfWork.Complete();
     }
 }

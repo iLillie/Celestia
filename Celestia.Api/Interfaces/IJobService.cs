@@ -1,13 +1,12 @@
 ﻿using Celestia.Models;
-using Celestia.Models.Dto;
 
 namespace Celestia.Api.Interfaces;
 
 public interface IJobService
 {
-    Task<IEnumerable<JobDto>> GetAllAsync();
-    Task<JobDto?> GetAsync(int id);
-    Task<Job> AddAsync(JobDto jobDto);
-    void Remove();
-    Task UpdateAsync(int id, JobDto jobDto);
+    Task<IEnumerable<Job>> GetAllAsync();
+    Task<Job?> GetAsync(int id);
+    Task<Job> AddAsync(Job value);
+    Task<bool> Delete(int id);
+    Task<bool> UpdateAsync(int id, Job value);
 }

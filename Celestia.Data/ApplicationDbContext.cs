@@ -10,10 +10,10 @@ public class ApplicationDbContext : DbContext
     private readonly string _connectionString;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-        IOptions<PostgresConfiguration> postgreConfiguration)
+        IOptions<PostgresConfiguration> postgresConfiguration)
         : base(options)
     {
-        _connectionString = postgreConfiguration.Value.ConnectionString!;
+        _connectionString = postgresConfiguration.Value.ConnectionString!;
     }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, string connectionString)
@@ -22,11 +22,11 @@ public class ApplicationDbContext : DbContext
         _connectionString = connectionString;
     }
 
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<Company> Companies { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-    public DbSet<Job> Jobs { get; set; }
-    public DbSet<Folder> Folders { get; set; }
+    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Company> Companies => Set<Company>();
+    public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<Job> Jobs => Set<Job>();
+    public DbSet<Folder> Folders => Set<Folder>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {

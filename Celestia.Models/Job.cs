@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Celestia.Models.Abstractions;
-using Celestia.Models.Dto;
 
 namespace Celestia.Models;
 
 [Table("jobs")]
 public class Job : OwnedModel
 {
-    [Required]
+    [Required(ErrorMessage = "The field {0} is required")]
     [StringLength(60, MinimumLength = 3)]
     public string Title { get; set; } = string.Empty;
     
-    [Required]
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Description { get; set; } = string.Empty;
     
     public string? PostingUrl { get; set; }
@@ -22,6 +21,7 @@ public class Job : OwnedModel
     [DataType(DataType.Date)]
     public DateTime? Deadline { get; set; }
     
+    [Required(ErrorMessage = "The field {0} is required")]
     public JobStatus Status { get; set; }
     
     public int? FolderId { get; set; }
@@ -29,29 +29,4 @@ public class Job : OwnedModel
     
     public int? CompanyId { get; set; }
     public Company? Company { get; set; }
-
-    public static Job MapDto(JobDto jobDto)
-    {
-        return new Job()
-        {
-            Id = 0,
-            Title = jobDto.Title,
-            Description = jobDto.Description,
-            PostingUrl = jobDto.PostingUrl,
-            Address = jobDto.Address,
-            Deadline =  DateTimeOffset.FromUnixTimeSeconds(jobDto.Deadline).DateTime.ToUniversalTime(),
-            Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status),
-            CreatedAt = DateTime.UtcNow,
-            AuthorId = 0 // TODO: Update before Auth system
-        };
-    }
-
-    public void Update(JobDto jobDto)
-    {
-        Title = jobDto.Title;
-        Description = jobDto.Description;
-        PostingUrl = jobDto.PostingUrl;
-        Address = jobDto.Address;
-        Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status);
-    }
 }
