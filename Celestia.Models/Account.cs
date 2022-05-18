@@ -1,23 +1,25 @@
-﻿using Celestia.Models.Abstractions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Celestia.Models.Abstractions;
 
 namespace Celestia.Models;
 
+[Table("accounts")]
 public class Account : BaseModel
 {
+    [Required]
+    [MaxLength(80)]
     public string Name { get; set; } = string.Empty;
-    public string? LastName { get; set; }
-    public string? Alias { get; set; } = string.Empty;
-    public bool AliasPreferred { get; set; }
+    
     public string Email { get; set; } = string.Empty;
-    public string? ImageUrl { get; set; }
-
-    public Address? Address { get; set; }
-
-    public List<JobBoard>? JobBoards { get; set; }
-
-    public List<Job>? Jobs { get; set; }
-
-    public List<Contact>? Contacts { get; set; }
-
-    public List<Company>? Companies { get; set; }
+    
+    public string? Address { get; set; }
+    
+    public ICollection<Job>? Jobs { get; set; }
+    
+    public ICollection<Contact>? Contacts { get; set; }
+    
+    public ICollection<Company>? Companies { get; set; }
+    
+    public ICollection<Folder>? Folders { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using Celestia.Data.Configurations;
-using Celestia.Models;
+﻿using Celestia.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
@@ -26,8 +25,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Contact> Contacts { get; set; }
-    public DbSet<JobBoard> JobBoards { get; set; }
     public DbSet<Job> Jobs { get; set; }
+    public DbSet<Folder> Folders { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
@@ -36,7 +35,6 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountEntityTypeConfiguration).Assembly);
         base.OnModelCreating(modelBuilder);
         modelBuilder.UseIdentityColumns();
     }
