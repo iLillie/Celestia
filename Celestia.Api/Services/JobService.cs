@@ -18,14 +18,9 @@ public class JobService : IJobService
     
     public async Task<JobDto?> GetAsync(int id)
     {
-        var job = await _context.Jobs
-            .Where(j => j.Id == id).FirstOrDefaultAsync();
+        var job = await _context.Jobs.FindAsync(id);
 
-        if (job is null) return null;
-
-        var jobDto = new JobDto(job);
-
-        return jobDto;
+        return job is null ? null : new JobDto(job);
     }
 
     public async Task<IEnumerable<JobDto>> ListAsync()
@@ -45,7 +40,7 @@ public class JobService : IJobService
     
     public async Task<Job?> Update(int id, JobUpdateDto updateDto)
     {
-        var job = await _context.Jobs.FirstOrDefaultAsync(j => j.Id == id);
+        var job = await _context.Jobs.FindAsync(id);
         if (job is null) return null;
 
         job.Update(updateDto);

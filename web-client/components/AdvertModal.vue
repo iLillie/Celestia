@@ -44,10 +44,7 @@
         </Dropdown>
         <Dropdown title="Beskrivelse">
           <p class="max-w-lg leading-normal ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id donec massa faucibus nunc viverra et feugiat
-            tristique. Dolor vel,
-            purus tristique egestas quis nulla aliquam ultrices amet.
-            Tempor viverra ornare vitae elementum accumsan. At ornare nisl, elementum hendrerit at proin. Id et.
+            {{ advert.description }}
           </p>
         </Dropdown>
         <Dropdown title="Kontakt">
@@ -83,7 +80,7 @@ export default {
   methods: {
     toDateString(unix) {
       if (unix === undefined) return "Snarest";
-      const date = new Date(unix);
+      const date = new Date(unix * 1000);
       const options = {year: 'numeric', month: 'long', day: 'numeric'};
       return date.toLocaleDateString('no-NB', options);
     }

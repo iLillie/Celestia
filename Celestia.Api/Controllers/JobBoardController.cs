@@ -34,15 +34,9 @@ public class JobBoardController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] JobBoardCreationDto? creationDto)
     {
-        if (creationDto is null)
-        {
-            return BadRequest("Job board object is empty");
-        }
+        if (creationDto is null) return BadRequest("Job board object is empty");
 
-        if (!ModelState.IsValid)
-        {
-            return BadRequest("Invalid model object");
-        }
+        //if (!ModelState.IsValid) return BadRequest("Invalid model object");
 
         var jobBoard = await _jobBoardService.Create(creationDto);
         return CreatedAtRoute("GetJobBoardById", new { id = jobBoard.Id }, new JobBoardDto(jobBoard));
@@ -51,15 +45,10 @@ public class JobBoardController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] JobBoardUpdateDto? updateDto)
     {
-        if (updateDto is null)
-        {
-            return BadRequest("Job board object is empty");
-        }
+        if (updateDto is null)  return BadRequest("Job board object is empty");
 
-        if (!ModelState.IsValid)
-        {
-            return BadRequest("Invalid model object");
-        }
+
+        if (!ModelState.IsValid)  return BadRequest("Invalid model object");
 
         var jobBoard = await _jobBoardService.Update(id, updateDto);
         return NoContent();

@@ -16,8 +16,6 @@ public class AccountDto
         Email = account.Email;
         _name = account.Name;
         Id = account.Id;
-        CreatedAt = DateUtilities.ToUnixSeconds(account.CreatedAt);
-        UpdatedAt = DateUtilities.ToUnixSeconds(account.UpdatedAt);
     }
 
     public int Id { get; }
@@ -25,8 +23,4 @@ public class AccountDto
     public string FullName => AliasPreferred ? _alias : $"{_name} {_lastName}".TrimEnd();
     public string Email { get; }
     public bool AliasPreferred { get; }
-
-    public int CreatedAt { get; }
-
-    public int UpdatedAt { get; }
 }

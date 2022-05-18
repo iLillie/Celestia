@@ -19,21 +19,17 @@ public class JobBoardService : IJobBoardService
     public async Task<JobBoardDto?> GetAsync(int id)
     {
         var jobBoard = await _context.JobBoards
-            .Where(j => j.Id == id)
             .Include(j => j.Jobs)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(j => j.Id == id);
 
-        if (jobBoard is null) return null;
-
-        var jobBoardDto = new JobBoardDto(jobBoard);
-
-        return jobBoardDto;
+        return jobBoard is null ? null : new JobBoardDto(jobBoard);
     }
 
     public async Task<IEnumerable<JobBoardDto>> ListAsync()
     {
         var jobBoards = await _context.JobBoards
-            .Include(j => j.Jobs).ToListAsync();
+            .Include(j => j.Jobs)
+            .ToListAsync();
 
         return jobBoards.Select(jB => new JobBoardDto(jB));
     }
@@ -48,11 +44,13 @@ public class JobBoardService : IJobBoardService
 
     public async Task<JobBoard?> Update(int id, JobBoardUpdateDto updateDto)
     {
-        var jobBoard = await _context.JobBoards.FirstOrDefaultAsync(j => j.Id == id);
+        var jobBoard = await _context.JobBoards.FindAsync(id);
         if (jobBoard is null) return null;
+        
         jobBoard.Update(updateDto);
         _context.JobBoards.Update(jobBoard);
         await _context.SaveChangesAsync();
+        
         return jobBoard;
     }
 }

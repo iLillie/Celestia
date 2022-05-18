@@ -16,9 +16,11 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
-    public string Get()
+    public async Task<IActionResult> Get()
     {
-        return "API Test";
+        var accounts = await _accountService.ListAsync();
+        if (!accounts.Any()) return NotFound();
+        return Ok(accounts);
     }
 
     [HttpGet("{id}")]

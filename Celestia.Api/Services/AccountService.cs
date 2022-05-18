@@ -16,11 +16,15 @@ public class AccountService : IAccountService
 
     public async Task<AccountDto?> GetAsync(int id)
     {
-        var account = await _context.Accounts
-            .Where(a => a.Id == id)
-            .FirstOrDefaultAsync();
-        if (account is null) return null;
-        var accountDto = new AccountDto(account);
-        return accountDto;
+        var account = await _context.Accounts.FindAsync(id);
+        return account is null ? null : new AccountDto(account);
+    }
+    
+    public async Task<IEnumerable<AccountDto>> ListAsync()
+    {
+        var accounts = await _context.Accounts
+            .ToListAsync();
+
+        return accounts.Select(a => new AccountDto(a));
     }
 }
