@@ -42,7 +42,7 @@ public class Job : OwnedModel
             Deadline =  DateTimeOffset.FromUnixTimeSeconds(jobDto.Deadline).DateTime.ToUniversalTime(),
             Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status),
             CreatedAt = DateTime.UtcNow,
-            AuthorId = jobDto.AuthorId
+            AuthorId = 0 // TODO: Update before Auth system
         };
     }
 
@@ -52,7 +52,6 @@ public class Job : OwnedModel
         Description = jobDto.Description;
         PostingUrl = jobDto.PostingUrl;
         Address = jobDto.Address;
-        Deadline = DateTimeOffset.FromUnixTimeSeconds(jobDto.Deadline).DateTime.ToUniversalTime();
         Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status);
     }
 }

@@ -17,6 +17,7 @@ builder.Services.Configure<PostgresConfiguration>(builder.Configuration.GetSecti
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 var app = builder.Build();
 
 

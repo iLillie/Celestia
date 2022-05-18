@@ -23,7 +23,7 @@ public class JobController : ControllerBase
     }
 
     // GET: api/Job/5
-    [HttpGet("{id}", Name = "Get")]
+    [HttpGet("{id}", Name = "GetJobById")]
     public async Task<ActionResult<JobDto>> Get(int id)
     {
         return await _jobService.GetAsync(id) ?? throw new InvalidOperationException();
@@ -35,8 +35,8 @@ public class JobController : ControllerBase
     {
         if (value is null) return BadRequest("Job is empty");
 
-        var jobBoard = await _jobService.AddAsync(value);
-        return CreatedAtRoute("Get", new { id = jobBoard.Id }, new JobDto(jobBoard));
+        var job = await _jobService.AddAsync(value);
+        return CreatedAtRoute("GetJobById", new { id = job.Id }, new JobDto(job));
     }
 
     // PUT: api/Job/5
@@ -45,11 +45,5 @@ public class JobController : ControllerBase
     {
         await _jobService.UpdateAsync(id, value);
         return NoContent();
-    }
-
-    // DELETE: api/Job/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
     }
 }
