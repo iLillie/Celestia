@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Celestia.Models.Abstractions;
+using Celestia.Models.Dto;
 
 namespace Celestia.Models;
 
@@ -28,4 +29,30 @@ public class Job : OwnedModel
     
     public int? CompanyId { get; set; }
     public Company? Company { get; set; }
+
+    public static Job MapDto(JobDto jobDto)
+    {
+        return new Job()
+        {
+            Id = 0,
+            Title = jobDto.Title,
+            Description = jobDto.Description,
+            PostingUrl = jobDto.PostingUrl,
+            Address = jobDto.Address,
+            Deadline =  DateTimeOffset.FromUnixTimeSeconds(jobDto.Deadline).DateTime.ToUniversalTime(),
+            Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status),
+            CreatedAt = DateTime.UtcNow,
+            AuthorId = jobDto.AuthorId
+        };
+    }
+
+    public void Update(JobDto jobDto)
+    {
+        Title = jobDto.Title;
+        Description = jobDto.Description;
+        PostingUrl = jobDto.PostingUrl;
+        Address = jobDto.Address;
+        Deadline = DateTimeOffset.FromUnixTimeSeconds(jobDto.Deadline).DateTime.ToUniversalTime();
+        Status = (JobStatus)Enum.Parse(typeof(JobStatus), jobDto.Status);
+    }
 }
