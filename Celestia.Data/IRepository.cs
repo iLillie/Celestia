@@ -7,7 +7,7 @@ public interface IRepository<TEntity> where TEntity : class, new ()
 {
     
     
-    Task<TEntity?> GetAsync(int id);
+    Task<TEntity?> GetAsync(int id,  bool ignoreAutoInclude = false);
     Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate); 
     
     Task<IEnumerable<TEntity>> GetAllAsync();

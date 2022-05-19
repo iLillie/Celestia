@@ -36,7 +36,7 @@ public class GenericService<T, TRepository> : IGenericService<T>
 
     public async Task<bool> Delete(int id)
     {
-        var job = await _repository.GetAsync(id);
+        var job = await _repository.GetAsync(id, true);
         if (job is null) return false;
         _repository.Delete(job);
         return await _unitOfWork.Complete();

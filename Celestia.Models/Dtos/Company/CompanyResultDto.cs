@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Celestia.Models.Dtos.Contact;
 
 namespace Celestia.Models.Dtos.Company;
 
@@ -16,4 +17,6 @@ public class CompanyResultDto
     public string? LogoUrl { get; set; }
     
     public string? Address { get; set; }
+    
+    public ICollection<ContactResultDto>? Contacts { get; set; }
 }

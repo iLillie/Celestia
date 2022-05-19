@@ -13,8 +13,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : OwnedMod
         _context = context;
     }
 
-    public async Task<TEntity?> GetAsync(int id)
-        => await _context.Set<TEntity>().FindAsync(id);
+    public async Task<TEntity?> GetAsync(int id, bool ignoreAutoInclude = false)
+    {
+        return ignoreAutoInclude ? 
+            await _context.Set<TEntity>().IgnoreAutoIncludes().FirstOrDefaultAsync(e => e.Id == id) 
+            : await _context.Set<TEntity>().FindAsync(id);
+    }
+      
 
     public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
         => await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
