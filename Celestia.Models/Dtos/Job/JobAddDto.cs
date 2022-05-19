@@ -15,4 +15,6 @@ public class JobAddDto
     
     [Required(ErrorMessage = "The field {0} is required")]
     public string Status { get; set; } = JobStatus.Draft.ToString();
+    
+    public int? FolderId { get; set; }
 }

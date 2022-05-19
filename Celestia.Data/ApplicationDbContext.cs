@@ -38,6 +38,7 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.UseIdentityColumns();
         modelBuilder.Entity<Company>().Navigation(c => c.Contacts).AutoInclude();
+        modelBuilder.Entity<Folder>().Navigation(f => f.Jobs).AutoInclude();
     }
 }
 

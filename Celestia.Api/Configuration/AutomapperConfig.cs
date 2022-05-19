@@ -2,6 +2,7 @@
 using Celestia.Models;
 using Celestia.Models.Dtos.Company;
 using Celestia.Models.Dtos.Contact;
+using Celestia.Models.Dtos.Folder;
 using Celestia.Models.Dtos.Job;
 
 namespace Celestia.Api.Configuration;
@@ -19,5 +20,8 @@ public class AutomapperConfig : Profile
         CreateMap<Contact, ContactAddDto>().ReverseMap();
         CreateMap<Contact, ContactEditDto>().ReverseMap();
         CreateMap<Contact, ContactResultDto>().ReverseMap();
+        CreateMap<Folder, FolderAddDto>().ReverseMap();
+        CreateMap<Folder, FolderEditDto>().ReverseMap();
+        CreateMap<Folder, FolderResultDto>().ReverseMap();
     }
 }

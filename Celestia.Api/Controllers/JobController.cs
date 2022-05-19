@@ -73,6 +73,8 @@ public class JobController : ControllerBase
         
         var mappedJob = _mapper.Map(value, fetchedJob);
         
+        Console.WriteLine(mappedJob.FolderId);
+        
         var isEdited = await _jobService.UpdateAsync(id, mappedJob);
         
         if (!isEdited) return BadRequest();
