@@ -1,5 +1,7 @@
 using AutoMapper;
 using Celestia.Api.Interfaces;
+using Celestia.Api.Services;
+using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.Dtos.Job;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +12,13 @@ namespace Celestia.Api.Controllers;
 [ApiController]
 public class JobController : ControllerBase
 {
-    private readonly IJobService _jobService;
+    private readonly GenericService<Job, IRepository<Job>> _jobService;
     private readonly IMapper _mapper;
 
-    public JobController(IMapper mapper, IJobService jobService)
+    public JobController(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
-        _jobService = jobService;
+        _jobService = new GenericService<Job, IRepository<Job>>(unitOfWork.JobRepository, unitOfWork);
     }
     
     // GET: api/Job
