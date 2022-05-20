@@ -11,6 +11,9 @@
     "nuxt": "3.0.0-rc.3"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.6.1"
+    "@headlessui/vue": "^1.6.1",
+    "@pinia/nuxt": "^0.1.9",
+    "mande": "^2.0.1",
+    "pinia": "^2.0.14"
   }
 }

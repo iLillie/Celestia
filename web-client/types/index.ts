@@ -1,5 +1,5 @@
 export interface Company {
-    id: number,
+    id?: number,
     name: string,
     homepageUrl?: string,
     logoUrl?: string,
@@ -8,7 +8,7 @@ export interface Company {
 }
 
 export interface Contact {
-    id: number,
+    id?: number,
     name?: string,
     phone?: string,
     email?: string,
@@ -16,7 +16,7 @@ export interface Contact {
 }
 
 export interface Job {
-    id: number,
+    id?: number,
     title: string,
     description?: string,
     postingUrl?: string,
@@ -25,7 +25,7 @@ export interface Job {
 }
 
 export interface Folder {
-    id: number,
+    id?: number,
     name: string,
     description: string,
     color: string,
