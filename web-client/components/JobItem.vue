@@ -17,7 +17,6 @@
     <p class="">
       {{job.address}}
     </p>
-
     <p class="line-clamp-2 text-ellipsis overflow-hidden mt-2">
       {{ job.description }}
     </p>
