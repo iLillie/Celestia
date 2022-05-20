@@ -10,19 +10,19 @@ export const useJobs = defineStore('jobs', {
     }),
     actions: {
         async getJob(id: number) {
-            this.jobs.push(await api.get(id));
+            return this.jobs.push(await api.get(id));
         },
         async getAllJobs() {
-            this.jobs = await api.get("");
+            return this.jobs = await api.get("");
         },
         async updateJob(id: number, job: Job) {
-            await api.put(id, job);
+            return await api.put(id, job);
         },
         async newJob(job: Job) {
-            this.jobs.push(await api.post(job));
+            return this.jobs.push(await api.post(job));
         },
         async deleteJob(id: number) {
-            await api.delete(id);
+            return await api.delete(id);
         }
     }
 })

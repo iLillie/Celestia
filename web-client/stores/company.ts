@@ -10,19 +10,19 @@ export const useCompanies = defineStore('companies', {
     }),
     actions: {
         async getCompany(id: number) {
-            this.companies.push(await api.get(id));
+            return this.companies.push(await api.get(id));
         },
         async getAllCompanies() {
-            this.companies = await api.get("");
+            return this.companies = await api.get("");
         },
         async updateCompany(id: number, company: Company) {
-            await api.put(id, company);
+            return await api.put(id, company);
         },
         async newCompany(company: Company) {
-            this.companies.push(await api.post(company));
+            return this.companies.push(await api.post(company));
         },
         async deleteCompany(id: number) {
-            await api.delete(id);
+            return await api.delete(id);
         }
     }
 })
