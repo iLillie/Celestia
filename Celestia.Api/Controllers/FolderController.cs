@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/folder")]
 [ApiController]
 public class FolderController : ControllerBase
 {
@@ -20,72 +20,77 @@ public class FolderController : ControllerBase
         _folderService = new GenericService<Folder, IRepository<Folder>>(unitOfWork.FolderRepository, unitOfWork);
     }
     
-    // GET: api/Folder
+    // GET: api/folder
     [HttpGet]
     public async Task<ActionResult<IEnumerable<FolderResultDto>>> GetAll()
     {
-        var folders = await _folderService.GetAllAsync();
-        var folderResultDtos = _mapper.Map<IEnumerable<FolderResultDto>>(folders);
-        return Ok(folderResultDtos);
+        var folderList = await _folderService.GetAllAsync();
+
+        if (!folderList.Any())
+            return NotFound("No folders found");
+        
+        return Ok(_mapper.Map<IEnumerable<FolderResultDto>>(folderList));
     }
 
-    // GET: api/Folder/5
-    [HttpGet("{id}", Name = "GetFolderById")]
+    // GET: api/folder/5
+    [HttpGet("{id:int}", Name = "GetFolderById")]
     public async Task<ActionResult<FolderResultDto>> Get(int id)
     {
         var folder = await _folderService.GetAsync(id);
+        var folderNotFound = folder is null;
         
-        if (folder == null) return NotFound();
-
-        var folderResultDto = _mapper.Map<FolderResultDto>(folder);
-        return Ok(folderResultDto);
+        if(folderNotFound)
+            return NotFound($"Folder with id: {id} not found");
+        
+        return Ok(_mapper.Map<FolderResultDto>(folder));
     }
 
-    // POST: api/Folder
+    // POST: api/folder
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] FolderAddDto? value)
+    public async Task<IActionResult> Post([FromBody] FolderAddDto? newFolder)
     {
-        if (!ModelState.IsValid) return BadRequest();
-        if (value is null) return BadRequest("Folder is empty");
+        var invalidFolder = !ModelState.IsValid || newFolder is null;
+        if (invalidFolder) 
+            return BadRequest("Invalid model provided for a new folder to be created");
         
-        var folder = _mapper.Map<Folder>(value);
-        var folderResult = await _folderService.AddAsync(folder);
-        var folderResultDto =  _mapper.Map<FolderResultDto>(folderResult);
-        return CreatedAtRoute("GetFolderById", new { id = folderResult.Id }, folderResultDto);
+        var folder = await _folderService.AddAsync(_mapper.Map<Folder>(newFolder));
+        return CreatedAtRoute(
+            "GetFolderById", 
+            new { id = folder.Id }, 
+            _mapper.Map<FolderResultDto>(folder)
+            );
     }
 
-    // PUT: api/Folder/5
+    // PUT: api/folder/5
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(int id, [FromBody] FolderEditDto value)
+    public async Task<IActionResult> Put(int id, [FromBody] FolderEditDto folderEditDto)
     {
-        if (id != value.Id) return BadRequest();
+        var invalidFolder = !ModelState.IsValid && id != folderEditDto.Id;
+        
+        if (invalidFolder) 
+            return BadRequest("Invalid model provided for a folder to be edited");
+        
         var folder = await _folderService.GetAsync(id);
+        var folderNotFound = folder is null;
         
-        if (folder is null) return NotFound();
-
-        if (!ModelState.IsValid) return BadRequest();
+        if (folderNotFound)
+            return NotFound($"Folder with id: {id} not found");
         
-        
-        var mappedFolder = _mapper.Map(value, folder);
-        
-        var isEdited = await _folderService.UpdateAsync(id, mappedFolder);
-        
-        if (!isEdited) return BadRequest();
-        
+        await _folderService.UpdateAsync(id, _mapper.Map(folderEditDto, folder)!);
         return NoContent();
     }
     
     
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var isDeleted = await _folderService.Delete(id);
-        return isDeleted ? NoContent() : NotFound();
+        var folder = await _folderService.GetAsync(id);
+        var folderNotFound = folder is null;
+        
+        if(folderNotFound)
+            return NotFound($"Folder with id: {id} not found");
+        
+        await _folderService.Delete(folder!);
+        return NoContent();
     }
 }

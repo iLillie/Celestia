@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/company")]
 [ApiController]
 public class CompanyController : ControllerBase
 {
@@ -21,73 +21,81 @@ public class CompanyController : ControllerBase
         _mapper = mapper;
         _companyService = new GenericService<Company, IRepository<Company>>(unitOfWork.CompanyRepository, unitOfWork);
     }
-    
-    // GET: api/Company
+
+    // GET: api/company
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CompanyResultDto>>> GetAll()
     {
-        var companies = await _companyService.GetAllAsync();
-        var companyResultDtos = _mapper.Map<IEnumerable<CompanyResultDto>>(companies);
-        return Ok(companyResultDtos);
+        var companyList = await _companyService.GetAllAsync();
+
+        if (!companyList.Any())
+            return NotFound("No companies found");
+
+        return Ok(_mapper.Map<IEnumerable<CompanyResultDto>>(companyList));
     }
 
-    // GET: api/Company/5
+    // GET: api/company/5
     [HttpGet("{id}", Name = "GetCompanyById")]
     public async Task<ActionResult<CompanyResultDto>> Get(int id)
     {
         var company = await _companyService.GetAsync(id);
+        var companyNotFound = company is null;
         
-        if (company == null) return NotFound();
+        if (companyNotFound)
+            return NotFound($"Company with id: {id} not found");
 
-        var companyResultDto = _mapper.Map<CompanyResultDto>(company);
-        return Ok(companyResultDto);
+        return Ok(_mapper.Map<CompanyResultDto>(company));
     }
 
-    // POST: api/Company
+    // POST: api/company
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] CompanyAddDto? value)
+    public async Task<IActionResult> Post([FromBody] CompanyAddDto? newCompany)
     {
-        if (!ModelState.IsValid) return BadRequest();
-        if (value is null) return BadRequest("Company is empty");
+        var invalidCompany = !ModelState.IsValid || newCompany is null;
         
-        var company = _mapper.Map<Company>(value);
-        var companyResult = await _companyService.AddAsync(company);
-        var companyResultDto =  _mapper.Map<CompanyResultDto>(companyResult);
-        return CreatedAtRoute("GetCompanyById", new { id = companyResult.Id }, companyResultDto);
+        if (invalidCompany) 
+            return BadRequest("Invalid model provided for a new company to be created");
+
+        var company = await _companyService.AddAsync(_mapper.Map<Company>(newCompany));
+        
+        return CreatedAtRoute(
+            "GetCompanyById", 
+            new { id = company.Id }, 
+            _mapper.Map<CompanyResultDto>(company)
+            );
     }
 
-    // PUT: api/Company/5
+    // PUT: api/company/5
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(int id, [FromBody] CompanyEditDto value)
+    public async Task<IActionResult> Put(int id, [FromBody] CompanyEditDto companyEditDto)
     {
-        if (id != value.Id) return BadRequest();
+        var invalidCompany = !ModelState.IsValid && id != companyEditDto.Id;
+        
+        if (invalidCompany) 
+            return BadRequest("Invalid model provided for a company to be edited");
+        
         var company = await _companyService.GetAsync(id);
+        var companyNotFound = company is null;
         
-        if (company is null) return NotFound();
-
-        if (!ModelState.IsValid) return BadRequest();
+        if (companyNotFound)
+            return NotFound($"Company with id: {id} not found");
         
-        
-        var mappedCompany = _mapper.Map(value, company);
-        
-        var isEdited = await _companyService.UpdateAsync(id, mappedCompany);
-        
-        if (!isEdited) return BadRequest();
-        
+        await _companyService.UpdateAsync(id, _mapper.Map(companyEditDto, company)!);
         return NoContent();
     }
-    
-    
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var isDeleted = await _companyService.Delete(id);
-        return isDeleted ? NoContent() : NotFound();
+        var company = await _companyService.GetAsync(id);
+        
+        var companyNotFound = company is null;
+        
+        if (companyNotFound)
+            return NotFound($"Company with id: {id} not found");
+        
+        await _companyService.Delete(company!);
+        return NoContent();
     }
 }

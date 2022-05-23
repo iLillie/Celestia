@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/job")]
 [ApiController]
 public class JobController : ControllerBase
 {
@@ -21,74 +21,77 @@ public class JobController : ControllerBase
         _jobService = new GenericService<Job, IRepository<Job>>(unitOfWork.JobRepository, unitOfWork);
     }
     
-    // GET: api/Job
+    // GET: api/job
     [HttpGet]
     public async Task<ActionResult<IEnumerable<JobResultDto>>> GetAll()
     {
-        var jobs = await _jobService.GetAllAsync();
-        var jobResultDtos = _mapper.Map<IEnumerable<JobResultDto>>(jobs);
-        return Ok(jobResultDtos);
+        var jobList = await _jobService.GetAllAsync();
+        if (!jobList.Any())
+            return NotFound("No jobs found");
+        
+        return Ok(_mapper.Map<IEnumerable<JobResultDto>>(jobList));
     }
 
-    // GET: api/Job/5
-    [HttpGet("{id}", Name = "GetJobById")]
+    // GET: api/job/5
+    [HttpGet("{id:int}", Name = "GetJobById")]
     public async Task<ActionResult<JobResultDto>> Get(int id)
     {
         var job = await _jobService.GetAsync(id);
+        var jobNotFound = job is null;
         
-        if (job == null) return NotFound();
-
-        var jobResultDto = _mapper.Map<JobResultDto>(job);
-        return Ok(jobResultDto);
+        if (jobNotFound)
+            return NotFound($"Job with id: {id} not found");
+        
+        return Ok(_mapper.Map<JobResultDto>(job));
     }
 
-    // POST: api/Job
+    // POST: api/job
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] JobAddDto? value)
+    public async Task<IActionResult> Post([FromBody] JobAddDto? newJob)
     {
-        if (!ModelState.IsValid) return BadRequest();
-        if (value is null) return BadRequest("Job is empty");
+        var invalidJob = !ModelState.IsValid || newJob is null;
         
-        var job = _mapper.Map<Job>(value);
-        var jobResult = await _jobService.AddAsync(job);
-        var jobResultDto =  _mapper.Map<JobResultDto>(job);
-        return CreatedAtRoute("GetJobById", new { id = jobResult.Id }, jobResultDto);
+        if (invalidJob) 
+            return BadRequest("Invalid model provided for a new job to be created");
+        
+        var job = await _jobService.AddAsync(_mapper.Map<Job>(newJob));
+        return CreatedAtRoute(
+            "GetJobById", 
+            new { id = job.Id }, 
+            _mapper.Map<JobResultDto>(job)
+            );
     }
 
-    // PUT: api/Job/5
+    // PUT: api/job/5
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(int id, [FromBody] JobEditDto value)
+    public async Task<IActionResult> Put(int id, [FromBody] JobEditDto jobEditDto)
     {
-        if (id != value.Id) return BadRequest();
-        var fetchedJob = await _jobService.GetAsync(id);
+        var invalidJob = !ModelState.IsValid && id != jobEditDto.Id;
         
-        if (fetchedJob is null) return NotFound();
-
-        if (!ModelState.IsValid) return BadRequest();
+        if (invalidJob) 
+            return BadRequest("Invalid model provided for a job to be edited");
         
+        var job = await _jobService.GetAsync(id);
+        var jobNotFound = job is null;
         
-        var mappedJob = _mapper.Map(value, fetchedJob);
+        if (jobNotFound)
+            return NotFound($"Job with id: {id} not found");
         
-        Console.WriteLine(mappedJob.FolderId);
-        
-        var isEdited = await _jobService.UpdateAsync(id, mappedJob);
-        
-        if (!isEdited) return BadRequest();
-        
+        await _jobService.UpdateAsync(id, _mapper.Map(jobEditDto, job)!);
         return NoContent();
     }
     
     
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var isDeleted = await _jobService.Delete(id);
-        return isDeleted ? NoContent() : NotFound();
+        var job = await _jobService.GetAsync(id);
+        var jobNotFound = job is null;
+        
+        if(jobNotFound)
+            return NotFound($"Job with id: {id} not found");
+        
+        await _jobService.Delete(job!);
+        return NoContent();
     }
 }

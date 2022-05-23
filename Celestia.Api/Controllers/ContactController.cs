@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/contact")]
 [ApiController]
 public class ContactController : ControllerBase
 {
@@ -24,68 +24,76 @@ public class ContactController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ContactResultDto>>> GetAll()
     {
-        var contacts = await _contactService.GetAllAsync();
-        var contactResultDtos = _mapper.Map<IEnumerable<ContactResultDto>>(contacts);
-        return Ok(contactResultDtos);
+        var contactList = await _contactService.GetAllAsync();
+        
+        if(!contactList.Any())
+            return NotFound("No contacts found");
+
+        return Ok(_mapper.Map<IEnumerable<ContactResultDto>>(contactList));
     }
 
-    // GET: api/Contact/5
-    [HttpGet("{id}", Name = "GetContactById")]
+    // GET: api/contact/5
+    [HttpGet("{id:int}", Name = "GetContactById")]
     public async Task<ActionResult<ContactResultDto>> Get(int id)
     {
         var contact = await _contactService.GetAsync(id);
+        var contactNotFound = contact is null;
         
-        if (contact == null) return NotFound();
-
-        var contactResultDto = _mapper.Map<ContactResultDto>(contact);
-        return Ok(contactResultDto);
+        if(contactNotFound)
+            return NotFound($"Contact with id: {id} not found");
+        
+        return Ok(_mapper.Map<ContactResultDto>(contact));
     }
 
-    // POST: api/Contact
+    // POST: api/contact
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Post([FromBody] ContactAddDto? value)
+    public async Task<IActionResult> Post([FromBody] ContactAddDto? newContact)
     {
-        if (!ModelState.IsValid) return BadRequest();
-        if (value is null) return BadRequest("Contact is empty");
+        var invalidContact = !ModelState.IsValid || newContact is null;
         
-        var contact = _mapper.Map<Contact>(value);
-        var contactResult = await _contactService.AddAsync(contact);
-        var contactResultDto =  _mapper.Map<ContactResultDto>(contactResult);
-        return CreatedAtRoute("GetContactById", new { id = contactResult.Id }, contactResultDto);
+        if (invalidContact) 
+            return BadRequest("Invalid model provided for a new contact to be created");
+        
+        var contact = await _contactService.AddAsync(_mapper.Map<Contact>(newContact));
+        
+        return CreatedAtRoute(
+            "GetContactById", 
+            new { id = contact.Id }, 
+            _mapper.Map<ContactResultDto>(contact)
+            );
     }
 
-    // PUT: api/Contact/5
+    // PUT: api/contact/5
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Put(int id, [FromBody] ContactEditDto value)
+    public async Task<IActionResult> Put(int id, [FromBody] ContactEditDto companyEditDto)
     {
-        if (id != value.Id) return BadRequest();
+        
+        var invalidContact = !ModelState.IsValid && id != companyEditDto.Id;
+        
+        if (invalidContact) 
+            return BadRequest("Invalid model provided for a contact to be edited");
+        
         var contact = await _contactService.GetAsync(id);
+        var contactNotFound = contact is null;
         
-        if (contact is null) return NotFound();
+        if(contactNotFound)
+            return NotFound($"Contact with id: {id} not found");
 
-        if (!ModelState.IsValid) return BadRequest();
-        
-        
-        var mappedContact = _mapper.Map(value, contact);
-        
-        var isEdited = await _contactService.UpdateAsync(id, mappedContact);
-        
-        if (!isEdited) return BadRequest();
-        
+        await _contactService.UpdateAsync(id, _mapper.Map(companyEditDto, contact)!);
         return NoContent();
     }
     
     
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var isDeleted = await _contactService.Delete(id);
-        return isDeleted ? NoContent() : NotFound();
+        var contact = await _contactService.GetAsync(id);
+        var contactNotFound = contact is null;
+        
+        if(contactNotFound)
+            return NotFound($"Contact with id: {id} not found");
+        
+        await _contactService.Delete(contact!);
+        return NoContent();
     }
 }
