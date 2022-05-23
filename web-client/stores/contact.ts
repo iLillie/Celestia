@@ -10,19 +10,19 @@ export const useContacts = defineStore('contacts', {
     }),
     actions: {
         async getContact(id: number) {
-            this.contacts.push(await api.get(id));
+            return this.contacts.push(await api.get(id));
         },
         async getAllJContact() {
-            this.contacts = await api.get("");
+            return this.contacts = await api.get("");
         },
         async updateContact(id: number, contact: Contact) {
-            await api.put(id, contact);
+            return await api.put(id, contact);
         },
         async newContact(contact: Contact) {
-            this.contacts.push(await api.post(contact));
+            return this.contacts.push(await api.post(contact));
         },
         async deleteContact(id: number) {
-            await api.delete(id);
+            return await api.delete(id);
         }
     }
 })

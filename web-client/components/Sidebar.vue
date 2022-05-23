@@ -1,10 +1,26 @@
 <script lang="ts" setup>
 import {useNavigation} from "~/stores/navigation";
+import {useFolders} from "~/stores/folder";
 
 const navigationStore = useNavigation();
+const folderStore = useFolders();
 
-const sidebar = {
-  navigationLists: [
+let foldersItems = [];
+
+await folderStore.getAllJFolder();
+
+const folders = useFolders().folders;
+let id = 3;
+
+folders.forEach((folder) => {
+  id++;
+  foldersItems.push({ id: id, href:`/folders/${folder.id}`, icon: 'ri-folder-open-fill', text: `${folder.name}`, color: folder.color });
+})
+
+
+let sidebar = computed(() => {
+  return {
+    navigationLists: [
     {
       name: "Hoved",
       ariaLabel: "Sidebar Hoved",
@@ -18,19 +34,16 @@ const sidebar = {
     {
       name: "Favoritter",
       ariaLabel: "Sidebar Favoritter",
-      items: [
-        {id: 4, href: '/frontend', icon: 'ri-folder-open-line', text: 'Frontend'},
-        {id: 5, href: '/backend', icon: 'ri-folder-open-line', text: 'Backend'},
-        {id: 6, href: '/full', icon: 'ri-folder-open-line', text: 'Full-Stack'},
-      ]
+      items: foldersItems
     },
   ],
-}
+  }
+})
 
-const changeState = () => {
+
+let changeState = () => {
   navigationStore.update();
 }
-
 
 const isCollapsed = computed(() => {
   return navigationStore.isCollapsed;

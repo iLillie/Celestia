@@ -9,20 +9,22 @@ export const useFolders = defineStore('folders', {
        folders: [],
     }),
     actions: {
-        async getFolder(id: number) {
-            this.folders.push(await api.get(id));
+        async getFolder(id: number) { 
+            if(this.folders.findIndex(f => f.id === id) == -1) {
+                return this.folders.push(await api.get(id));
+            }
         },
         async getAllJFolder() {
-            this.folders = await api.get("");
+            return this.folders = await api.get("");
         },
         async updateFolder(id: number, folder: Folder) {
-            await api.put(id, folder);
+            return await api.put(id, folder);
         },
         async newFolder(folder: Folder) {
-            this.folders.push(await api.post(folder));
+            return this.folders.push(await api.post(folder));
         },
         async deleteFolder(id: number) {
-            await api.delete(id);
+            return await api.delete(id);
         }
     }
 })
