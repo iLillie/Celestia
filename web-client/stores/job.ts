@@ -13,7 +13,7 @@ export const useJobs = defineStore('jobs', {
             return this.jobs.push(await api.get(id));
         },
         async getAllJobs() {
-            return this.jobs = await api.get("");
+            this.jobs = await api.get("");
         },
         async updateJob(id: number, job: Job) {
             return await api.put(id, job);

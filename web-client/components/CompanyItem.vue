@@ -5,16 +5,16 @@
 </script>
 
 <template>
-  <article class="text-gray-900 bg-white z-0 p-4 clamped-width rounded-md drop-shadow transition ease-in-out hover:scale-105">
+  <article style="background-color: #434856" class="text-gray-100 text-lg z-0 p-4 text-md clamped-width rounded-md drop-shadow transition ease-in-out hover:scale-105">
     <div class="flex justify-between items-center">
-      <h2 class="max-w-ch-6 text-xl font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+      <h2 class="max-w-ch-6 text-xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
         {{ company.name }}
       </h2>
     </div>
-    <a :href="company.homepageUrl">
+    <a v-if="company.homepageUrl != null" :href="company.homepageUrl">
       Hjemmeside
     </a>
-    <p class="">
+    <p class="text-gray-200">
       {{company.address}}
     </p>
   </article>

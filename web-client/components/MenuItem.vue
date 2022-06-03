@@ -12,9 +12,9 @@ const isCollapsed = computed(() => {
 </script>
 
 <template>
-  <li class="font-medium text-lg text-gray-50">
+  <li class="font-medium text-lg text-gray-200">
     <NuxtLink :class="[activeLink, collapsedLink]"  :to="linkItem.href"
-              class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out hover:text-gray-900 hover:bg-gray-200">
+              class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out hover:text-gray-300 hover:bg-gray-900">
       <span :style="`color: ${linkItem.color}`" :class="linkItem.icon"></span>
       <div v-if="!isCollapsed" class="">
         <p>{{ linkItem.text }}</p>
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     activeLink() {
-      return this.$route.path == this.linkItem.href ? 'bg-gray-100 text-black' : '';
+      return this.$route.path == this.linkItem.href ? 'text-gray-300 bg-gray-900' : '';
     },
     collapsedLink() {
       return false ? 'justify-center' : '';

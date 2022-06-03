@@ -2,7 +2,7 @@
 import {useJobs} from "~/stores/job";
 
 const jobStore = useJobs();
-await jobStore.getAllJobs();
+const jobs = await jobStore.getAllJobs();
 
 </script>
 

@@ -5,19 +5,19 @@ import {Contact} from "~/types";
 </script>
 
 <template>
-  <article class="text-gray-900 bg-white z-0 p-4 clamped-width rounded-md drop-shadow transition ease-in-out hover:scale-105">
+  <article style="background-color: #434856" class="text-gray-100 text-lg bg-white z-0 p-4 clamped-width rounded-md drop-shadow transition ease-in-out hover:scale-105">
     <div class="flex justify-between items-center">
-      <h2 class="max-w-ch-6 text-xl font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+      <h2 class="max-w-ch-6 text-xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
         {{ contact.name }}
       </h2>
     </div>
-    <p >
+    <p class="text-gray-200">
       {{contact.email}}
     </p>
-    <p>
+    <p class="text-gray-200">
       {{contact.phone}}
     </p>
-    <p>
+    <p class="text-gray-200">
       {{contact.address}}
     </p>
   </article>
