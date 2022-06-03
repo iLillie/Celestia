@@ -19,22 +19,22 @@
 </script>
 
 <template>
-  <main class="p-8 grid gap-8 content-start overflow-y-auto max-w-min">
-    <h2 class="text-2xl font-bold">Jobber</h2>
-    <div class="grid main gap-8">
+  <main class="p-8 grid gap-8 content-start overflow-y-auto max-w-min font-medium">
+    <h2 class="text-3xl">Jobber</h2>
+    <div class="grid main gap-6">
       <JobItem v-for="job in jobStore.jobs.slice(0, 6)" :job="job"/>
     </div>
-    <h2 class="text-2xl font-bold">Selskaper</h2>
+    <h2 class="text-3xl">Selskaper</h2>
     <div class="grid main gap-8">
       <CompanyItem v-for="company in companyStore.companies" :company="company"/>
     </div>
 
     <div v-for="folder in folderStore.folders" class="grid gap-8">
-      <h2 class="text-2xl font-bold">{{ folder.name }}</h2>
+      <h2 class="text-3xl font-bold">{{ folder.name }}</h2>
       <JobItem v-for="job in folder.jobs" :job="job"/>
     </div>
 
-    <h2 class="text-2xl font-bold">Kontakter</h2>
+    <h2 class="text-3xl font-bold">Kontakter</h2>
     <div class="grid main gap-8">
       <ContactItem v-for="contact in contactStore.contacts" :contact="contact"/>
     </div>
@@ -42,16 +42,6 @@
 </template>
 
 <style>
-  html {
-    background-color: #2C2F38;
-    color: white;
-  }
-
-  .main {
-    justify-items: start;
-    justify-content: start;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 </style>
 
 

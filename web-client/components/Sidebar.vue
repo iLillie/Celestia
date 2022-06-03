@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import {useNavigation} from "~/stores/navigation";
 import {useFolders} from "~/stores/folder";
 
@@ -71,9 +71,9 @@ const nameClass = computed(() => {
 <template>
   <aside id="sidebar"
          :class="sidebarClass"
-         class="nav-color h-screen shadow-md p-4  flex flex-col gap-8 overflow-y-auto sticky top-0">
+         class="bg-portage-50 dark:bg-neutral-900 h-screen p-4 flex flex-col gap-8 overflow-y-auto sticky top-0">
 
-    <header :class="headerClass" class="flex py-8 px-2 items-center">
+    <header :class="headerClass" class="flex py-2 px-2 items-center">
       <svg :class="logoClass" aria-label="it jakt" width="148" height="35" viewBox="0 0 148 35" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M23.0293 15.8158C23.0293 19.0456 20.4111 21.6638 17.1813 21.6638C13.9516 21.6638 11.3333 19.0456 11.3333 15.8158V12.6246C11.3333 11.9115 11.9115 11.3333 12.6246 11.3333L21.738 11.3333C22.4512 11.3333 23.0293 11.9115 23.0293 12.6246L23.0293 15.8158Z" fill="#7D9BE8"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M26.2976 17H34V30.6C34 32.4778 32.4778 34 30.6 34H3.4C1.52223 34 0 32.4778 0 30.6V17H8.08014C8.85868 21.2961 12.6407 24.5556 17.1889 24.5556C21.7371 24.5556 25.5191 21.2961 26.2976 17Z" fill="white"/>
@@ -91,7 +91,7 @@ const nameClass = computed(() => {
           {{ navigationList.name }}
         </p>
         <ul class="grid gap-4">
-          <MenuItem v-for="item in navigationList.items" :key="item.id" :linkItem="item"/>
+          <MenuItem v-for="item in navigationList.items" :key="item.id" :menu-item="item"/>
         </ul>
       </div>
     </nav>
@@ -104,9 +104,5 @@ const nameClass = computed(() => {
 /* TODO: Add into config? */
 .clamped-width {
   width: clamp(14rem, 17vw + 1rem, 20rem);
-}
-
-.nav-color {
-  background-color: #434856;
 }
 </style>

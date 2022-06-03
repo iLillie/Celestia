@@ -17,11 +17,6 @@ let folder = folderStore.folders.find(f => f.id === parseInt(route.params.id));
 
 <style>
 
-html {
-  background-color: #2C2F38;
-  color: white;
-}
-
 .main {
   justify-items: start;
   justify-content: start;

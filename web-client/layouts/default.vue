@@ -1,7 +1,8 @@
 <template>
-  <div class="grid-container">
+  <div class="bg-portage-100 dark:bg-neutral-800 dark:text-neutral-300 grid-container text-slate-700">
     <Sidebar/>
     <div>
+      <Header></Header>
       <slot/>
     </div>
   </div>

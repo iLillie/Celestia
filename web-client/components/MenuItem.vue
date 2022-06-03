@@ -1,40 +1,33 @@
-﻿<script setup>
-
+﻿<script setup lang="ts">
 import {useNavigation} from "~/stores/navigation";
 
+const route = useRoute();
 const navigationStore = useNavigation();
+const props = defineProps<{menuItem: any}>()
 
-const isCollapsed = computed(() => {
-  return navigationStore.isCollapsed;
-})
-
+const isCollapsed = computed(() => navigationStore.isCollapsed);
+const isActiveState = computed(() => route.path == props.menuItem.href);
 
 </script>
 
 <template>
-  <li class="font-medium text-lg text-gray-200">
-    <NuxtLink :class="[activeLink, collapsedLink]"  :to="linkItem.href"
-              class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out hover:text-gray-300 hover:bg-gray-900">
-      <span :style="`color: ${linkItem.color}`" :class="linkItem.icon"></span>
+  <li class="text-lg
+              text-gray-600 hover:bg-neutral-50 hover:shadow-sm
+              dark:hover:bg-neutral-800 dark:text-neutral-300 ">
+    <NuxtLink :class="isActiveState ? 'bg-neutral-50 shadow-sm dark:bg-neutral-800' : ''"
+              :to="menuItem.href"
+              class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out">
+      <span :style="`color: ${menuItem.color}`" :class="menuItem.icon"></span>
       <div v-if="!isCollapsed" class="">
-        <p>{{ linkItem.text }}</p>
+        <p>{{ menuItem.text }}</p>
       </div>
     </NuxtLink>
   </li>
 </template>
 
-<script>
-export default {
-  props: {
-    linkItem: Object
-  },
-  computed: {
-    activeLink() {
-      return this.$route.path == this.linkItem.href ? 'text-gray-300 bg-gray-900' : '';
-    },
-    collapsedLink() {
-      return false ? 'justify-center' : '';
-    }
+<style scoped>
+  .hover-state {
+    @apply bg-neutral-50 text-gray-600 shadow-sm;
   }
-}
-</script>
+
+</style>
