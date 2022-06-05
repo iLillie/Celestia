@@ -14,12 +14,17 @@ import {Job} from "~/types";
       </h2>
       <IconButton icon="ri-more-fill"></IconButton>
     </div>
-    <a :href="job.postingUrl">
-      Stilling
-    </a>
-    <p class="text-gray-600 dark:text-gray-300">
-      {{ job.address }}
-    </p>
+    <ul class="flex gap-2 items-center text-green-700 dark:text-green-300">
+      <li>
+        <span class="ri-road-map-fill"></span>
+      </li>
+      <li>
+        <p>
+          {{ job.address == null ? 'Norge' : job.address }}
+        </p>
+      </li>
+    </ul>
+
     <p class="text-gray-600 dark:text-gray-300 line-clamp-2 text-ellipsis overflow-hidden mt-2">
       {{ job.description }}
     </p>

@@ -16,11 +16,12 @@
 
   const contactStore = useContacts();
   await contactStore.getAllJContact();
+
+
 </script>
 
 <template>
   <main class="p-8 grid gap-8 content-start overflow-y-auto max-w-min font-medium">
-    <h2 class="text-3xl">Jobber</h2>
     <div class="grid main gap-6">
       <JobItem v-for="job in jobStore.jobs.slice(0, 6)" :job="job"/>
     </div>

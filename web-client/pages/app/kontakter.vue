@@ -8,7 +8,6 @@ await contactStore.getAllJContact();
 
 <template>
     <main class="p-8 grid gap-8 content-start overflow-y-auto max-w-min">
-      <h2 class="text-2xl font-bold">Kontakter</h2>
       <div class="grid main gap-8">
         <ContactItem v-for="contact in contactStore.contacts" :contact="contact"/>
       </div>

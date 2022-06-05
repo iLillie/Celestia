@@ -8,7 +8,6 @@ const jobs = await jobStore.getAllJobs();
 
 <template>
     <main class="p-8 grid gap-8 content-start overflow-y-auto max-w-min">
-      <h2 class="text-2xl font-bold">Jobber</h2>
       <div class="grid main gap-8">
         <JobItem v-for="job in jobStore.jobs" :job="job"/>
       </div>
