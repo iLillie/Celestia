@@ -13,8 +13,8 @@ const isActiveState = computed(() => route.path == props.menuItem.href);
 <template>
   <li class="text-lg
               text-gray-600 hover:bg-neutral-50 hover:shadow-sm
-              dark:hover:bg-neutral-800 dark:text-neutral-300 ">
-    <NuxtLink :class="isActiveState ? 'bg-neutral-50 shadow-sm dark:bg-neutral-800' : ''"
+              dark:hover:bg-neutral-700 dark:text-neutral-300 font-medium">
+    <NuxtLink :class="isActiveState ? 'bg-neutral-50 shadow-sm dark:bg-neutral-700' : ''"
               :to="menuItem.href"
               class="flex items-center gap-2.5 p-4 rounded transition duration-300 ease-in-out">
       <span :style="`color: ${menuItem.color}`" :class="menuItem.icon"></span>

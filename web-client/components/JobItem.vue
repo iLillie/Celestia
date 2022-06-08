@@ -19,7 +19,7 @@ import {Job} from "~/types";
         <span class="ri-road-map-fill"></span>
       </li>
       <li>
-        <p>
+        <p class="max-w-ch-6 text-ellipsis whitespace-nowrap overflow-hidden">
           {{ job.address == null ? 'Norge' : job.address }}
         </p>
       </li>

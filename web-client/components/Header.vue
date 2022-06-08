@@ -8,7 +8,7 @@
 
 
 <template>
-  <header class="bg-portage-50 dark:bg-neutral-900 dark:text-neutral-200 flex justify-between items-center min-w-max h-20 px-8 sticky top-0 z-40">
+  <header class="bg-portage-50 dark:bg-neutral-800 dark:text-neutral-200 flex justify-between items-center min-w-max h-20 px-8 sticky top-0 z-40">
     <h1 class="text-2xl font-bold">{{ title }}</h1>
     <p class="text-xl">Lillie</p>
   </header>

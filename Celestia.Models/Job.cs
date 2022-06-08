@@ -8,7 +8,7 @@ namespace Celestia.Models;
 public class Job : OwnedModel
 {
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(60, MinimumLength = 3)]
+    [StringLength(120, MinimumLength = 3)]
     public string Title { get; set; } = string.Empty;
     
     [Required(ErrorMessage = "The field {0} is required")]

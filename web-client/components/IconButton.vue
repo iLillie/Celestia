@@ -13,10 +13,6 @@ export default {
   name: "IconButton",
   props: {
     icon: '',
-    onclick: {
-      type: () => {
-      }
-    },
     hasShadow: false
   }
 }

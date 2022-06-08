@@ -9,16 +9,16 @@ public static class ModelBuilderExtensions
     {
         var testAccount = new Account()
         {
-            Id = 0,
+            Id = 1,
             Name = "Lillie",
             Address = "Oslo, Norway",
             Auth0Id = "",
-            CreatedAt = new DateTime()
+            CreatedAt = DateTime.UtcNow
         };
-        
-        var fakeCompanyList = FakeData.FakeCompanyList(15, testAccount);
-        var fakeJobList = FakeData.FakeJobList(30, testAccount, fakeCompanyList);
-        var fakeContactList = FakeData.FakeCompanyList(15, testAccount);
+        FakeData.Init();
+        var fakeCompanyList = FakeData.FakeCompanyList(15, testAccount.Id);
+        var fakeJobList = FakeData.FakeJobList(30, testAccount.Id, fakeCompanyList);
+        var fakeContactList = FakeData.FakeContactList(15, testAccount.Id);
         
         modelBuilder.Entity<Account>().HasData(testAccount);
         modelBuilder.Entity<Company>().HasData(fakeCompanyList);

@@ -17,6 +17,5 @@ public class Folder : OwnedModel
     [Required(ErrorMessage = "The field {0} is required")]
     [RegularExpression("^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$")]
     public string? Color { get; set; }
-
     public ICollection<Job>? Jobs { get; set; }
 }

@@ -52,8 +52,10 @@ public class FolderController : ControllerBase
         var invalidFolder = !ModelState.IsValid || newFolder is null;
         if (invalidFolder) 
             return BadRequest("Invalid model provided for a new folder to be created");
+        var folderMap = _mapper.Map<Folder>(newFolder);
+        folderMap.AuthorId = 1;
+        var folder = await _folderService.AddAsync(folderMap);
         
-        var folder = await _folderService.AddAsync(_mapper.Map<Folder>(newFolder));
         return CreatedAtRoute(
             "GetFolderById", 
             new { id = folder.Id }, 

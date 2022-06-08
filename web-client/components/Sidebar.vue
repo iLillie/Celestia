@@ -9,7 +9,7 @@ let foldersItems = [];
 
 await folderStore.getAllJFolder();
 
-const folders = useFolders().folders;
+const folders = folderStore.folders;
 let id = 3;
 
 folders.forEach((folder) => {
@@ -71,7 +71,7 @@ const nameClass = computed(() => {
 <template>
   <aside id="sidebar"
          :class="sidebarClass"
-         class="bg-portage-50 dark:bg-neutral-900 h-screen p-4 flex flex-col gap-8 overflow-y-auto sticky top-0">
+         class="bg-portage-50 dark:bg-neutral-800 h-screen p-4 flex flex-col gap-8 overflow-y-auto sticky top-0">
 
     <header :class="headerClass" class="flex py-2 px-2 items-center">
       <Logo :class="logoClass"/>

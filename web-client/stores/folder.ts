@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import {mande} from "mande";
 import {Folder} from "~/types";
 
+
 const api = mande('http://localhost:5001/api/Folder');
 
 export const useFolders = defineStore('folders', {
@@ -9,7 +10,7 @@ export const useFolders = defineStore('folders', {
        folders: [],
     }),
     actions: {
-        async getFolder(id: number) { 
+        async getFolder(id: number) {
             if(this.folders.findIndex(f => f.id === id) == -1) {
                 return this.folders.push(await api.get(id));
             }
@@ -28,3 +29,4 @@ export const useFolders = defineStore('folders', {
         }
     }
 })
+

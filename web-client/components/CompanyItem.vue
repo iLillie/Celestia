@@ -19,7 +19,7 @@
         <span class="ri-road-map-fill"></span>
       </li>
       <li>
-        <p>
+        <p class="max-w-ch-6 text-ellipsis whitespace-nowrap overflow-hidden">
           {{ company.address == null ? 'Norge' : company.address }}
         </p>
       </li>

@@ -87,11 +87,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("All");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseRouting();
 app.MapDefaultControllerRoute();
-
-
 
 app.Run();

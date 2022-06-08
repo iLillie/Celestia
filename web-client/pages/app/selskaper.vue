@@ -2,7 +2,6 @@
 import {useJobs} from "~/stores/job";
 import CompanyItem from "~/components/CompanyItem.vue";
 import {useCompanies} from "~/stores/company";
-import {useFolders} from "~/stores/folder";
 
 
 const companyStore = useCompanies();
