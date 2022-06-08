@@ -1,4 +1,5 @@
-﻿using Celestia.Models;
+﻿using Celestia.Data.Seeding;
+using Celestia.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
@@ -39,6 +40,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.UseIdentityColumns();
         modelBuilder.Entity<Company>().Navigation(c => c.Contacts).AutoInclude();
         modelBuilder.Entity<Folder>().Navigation(f => f.Jobs).AutoInclude();
+        modelBuilder.Seed();
     }
 }
 
