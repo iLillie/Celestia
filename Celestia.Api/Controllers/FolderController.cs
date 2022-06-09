@@ -3,6 +3,7 @@ using Celestia.Api.Services;
 using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.Dtos.Folder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -22,6 +23,7 @@ public class FolderController : ControllerBase
     
     // GET: api/folder
     [HttpGet]
+    [Authorize(Policy = "ReadAll")]
     public async Task<ActionResult<IEnumerable<FolderResultDto>>> GetAll()
     {
         var folderList = await _folderService.GetAllAsync();
@@ -36,7 +38,7 @@ public class FolderController : ControllerBase
     [HttpGet("{id:int}", Name = "GetFolderById")]
     public async Task<ActionResult<FolderResultDto>> Get(int id)
     {
-        var folder = await _folderService.GetAsync(id);
+        var folder = await _folderService.GetAsync(id, User.Identity.Name);
         var folderNotFound = folder is null;
         
         if(folderNotFound)
@@ -72,7 +74,7 @@ public class FolderController : ControllerBase
         if (invalidFolder) 
             return BadRequest("Invalid model provided for a folder to be edited");
         
-        var folder = await _folderService.GetAsync(id);
+        var folder = await _folderService.GetAsync(id, User.Identity.Name);
         var folderNotFound = folder is null;
         
         if (folderNotFound)
@@ -86,7 +88,7 @@ public class FolderController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var folder = await _folderService.GetAsync(id);
+        var folder = await _folderService.GetAsync(id, User.Identity.Name);
         var folderNotFound = folder is null;
         
         if(folderNotFound)

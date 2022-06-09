@@ -5,6 +5,7 @@ using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.Dtos.Company;
 using Celestia.Models.Dtos.Job;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -38,7 +39,7 @@ public class CompanyController : ControllerBase
     [HttpGet("{id}", Name = "GetCompanyById")]
     public async Task<ActionResult<CompanyResultDto>> Get(int id)
     {
-        var company = await _companyService.GetAsync(id);
+        var company = await _companyService.GetAsync(id, User.Identity.Name);
         var companyNotFound = company is null;
         
         if (companyNotFound)
@@ -74,7 +75,7 @@ public class CompanyController : ControllerBase
         if (invalidCompany) 
             return BadRequest("Invalid model provided for a company to be edited");
         
-        var company = await _companyService.GetAsync(id);
+        var company = await _companyService.GetAsync(id, User.Identity.Name);
         var companyNotFound = company is null;
         
         if (companyNotFound)
@@ -88,7 +89,7 @@ public class CompanyController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var company = await _companyService.GetAsync(id);
+        var company = await _companyService.GetAsync(id, User.Identity.Name);
         
         var companyNotFound = company is null;
         

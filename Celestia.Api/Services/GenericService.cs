@@ -23,8 +23,8 @@ public class GenericService<T, TRepository> : IGenericService<T>
     public async Task<IEnumerable<T>> GetAllAsync() 
         => await _repository.GetAllAsync();
 
-    public async Task<T?> GetAsync(int id)
-        => await _repository.GetAsync(id);
+    public async Task<T?> GetAsync(int id, string auth0Id)
+        => await _repository.GetAsync(id, auth0Id);
 
     public async Task<T> AddAsync(T value)
     {

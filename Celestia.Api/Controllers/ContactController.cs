@@ -3,6 +3,7 @@ using Celestia.Api.Services;
 using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.Dtos.Contact;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -36,7 +37,7 @@ public class ContactController : ControllerBase
     [HttpGet("{id:int}", Name = "GetContactById")]
     public async Task<ActionResult<ContactResultDto>> Get(int id)
     {
-        var contact = await _contactService.GetAsync(id);
+        var contact = await _contactService.GetAsync(id, User.Identity.Name);
         var contactNotFound = contact is null;
         
         if(contactNotFound)
@@ -73,7 +74,7 @@ public class ContactController : ControllerBase
         if (invalidContact) 
             return BadRequest("Invalid model provided for a contact to be edited");
         
-        var contact = await _contactService.GetAsync(id);
+        var contact = await _contactService.GetAsync(id, User.Identity.Name);
         var contactNotFound = contact is null;
         
         if(contactNotFound)
@@ -87,7 +88,7 @@ public class ContactController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var contact = await _contactService.GetAsync(id);
+        var contact = await _contactService.GetAsync(id, User.Identity.Name);
         var contactNotFound = contact is null;
         
         if(contactNotFound)

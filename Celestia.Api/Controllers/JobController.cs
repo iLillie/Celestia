@@ -4,6 +4,7 @@ using Celestia.Api.Services;
 using Celestia.Data;
 using Celestia.Models;
 using Celestia.Models.Dtos.Job;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Celestia.Api.Controllers;
@@ -28,7 +29,7 @@ public class JobController : ControllerBase
         var jobList = await _jobService.GetAllAsync();
         if (!jobList.Any())
             return NotFound("No jobs found");
-        
+
         return Ok(_mapper.Map<IEnumerable<JobResultDto>>(jobList));
     }
 
@@ -36,12 +37,12 @@ public class JobController : ControllerBase
     [HttpGet("{id:int}", Name = "GetJobById")]
     public async Task<ActionResult<JobResultDto>> Get(int id)
     {
-        var job = await _jobService.GetAsync(id);
+        var job = await _jobService.GetAsync(id, User.Identity.Name);
         var jobNotFound = job is null;
-        
+
         if (jobNotFound)
             return NotFound($"Job with id: {id} not found");
-        
+
         return Ok(_mapper.Map<JobResultDto>(job));
     }
 
@@ -71,7 +72,7 @@ public class JobController : ControllerBase
         if (invalidJob) 
             return BadRequest("Invalid model provided for a job to be edited");
         
-        var job = await _jobService.GetAsync(id);
+        var job = await _jobService.GetAsync(id, User.Identity.Name);
         var jobNotFound = job is null;
         
         if (jobNotFound)
@@ -85,7 +86,7 @@ public class JobController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var job = await _jobService.GetAsync(id);
+        var job = await _jobService.GetAsync(id, User.Identity.Name);
         var jobNotFound = job is null;
         
         if(jobNotFound)

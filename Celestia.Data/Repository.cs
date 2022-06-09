@@ -13,11 +13,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : OwnedMod
         _context = context;
     }
 
-    public async Task<TEntity?> GetAsync(int id, bool ignoreAutoInclude = false)
+    public async Task<TEntity?> GetAsync(int id, string auth0Id, bool ignoreAutoInclude = false)
     {
-        return ignoreAutoInclude ? 
-            await _context.Set<TEntity>().IgnoreAutoIncludes().FirstOrDefaultAsync(e => e.Id == id) 
-            : await _context.Set<TEntity>().FindAsync(id);
+        return ignoreAutoInclude
+            ? await _context.Set<TEntity>().IgnoreAutoIncludes().FirstOrDefaultAsync(entity => entity.Author.Auth0Id == auth0Id && entity.Id == id)
+            : await _context.Set<TEntity>().FirstOrDefaultAsync(entity => entity.Author.Auth0Id == auth0Id && entity.Id == id);
     }
       
 
@@ -28,7 +28,10 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : OwnedMod
         => await _context.Set<TEntity>().OrderBy(l => l.Id).ToListAsync();
 
     public async Task<IEnumerable<TEntity>> GetWhereAsync(Expression<Func<TEntity, bool>> predicate)
-        => await _context.Set<TEntity>().Where(predicate).OrderBy(l => l.Id).ToListAsync();
+        => await _context.Set<TEntity>()
+            .Where(predicate)
+            .OrderBy(l => l.Id)
+            .ToListAsync();
 
     public async Task AddAsync(TEntity entity)
         => await _context.Set<TEntity>().AddAsync(entity);
