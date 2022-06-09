@@ -15,11 +15,13 @@ public class JobController : ControllerBase
 {
     private readonly GenericService<Job, IRepository<Job>> _jobService;
     private readonly IMapper _mapper;
+    private readonly IAccountService _accountService;
 
-    public JobController(IMapper mapper, IUnitOfWork unitOfWork)
+    public JobController(IMapper mapper, IUnitOfWork unitOfWork, IAccountService accountService)
     {
         _mapper = mapper;
         _jobService = new GenericService<Job, IRepository<Job>>(unitOfWork.JobRepository, unitOfWork);
+        _accountService = accountService;
     }
     
     // GET: api/job
@@ -54,8 +56,11 @@ public class JobController : ControllerBase
         
         if (invalidJob) 
             return BadRequest("Invalid model provided for a new job to be created");
-        
-        var job = await _jobService.AddAsync(_mapper.Map<Job>(newJob));
+
+        var mappedJob = _mapper.Map<Job>(newJob);
+        var account = await _accountService.GetUserFromAuth0Id(User.Identity.Name);
+        mappedJob.AuthorId = account.Id;
+        var job = await _jobService.AddAsync(mappedJob);
         return CreatedAtRoute(
             "GetJobById", 
             new { id = job.Id }, 
@@ -91,6 +96,7 @@ public class JobController : ControllerBase
         
         if(jobNotFound)
             return NotFound($"Job with id: {id} not found");
+        
         
         await _jobService.Delete(job!);
         return NoContent();

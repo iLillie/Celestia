@@ -1,4 +1,5 @@
 using AutoMapper;
+using Celestia.Api.Interfaces;
 using Celestia.Api.Services;
 using Celestia.Data;
 using Celestia.Models;
@@ -14,11 +15,13 @@ public class ContactController : ControllerBase
 {
     private readonly GenericService<Contact, IRepository<Contact>> _contactService;
     private readonly IMapper _mapper;
+    private readonly IAccountService _accountService;
 
-    public ContactController(IMapper mapper, IUnitOfWork unitOfWork)
+    public ContactController(IMapper mapper, IUnitOfWork unitOfWork, IAccountService accountService)
     {
         _mapper = mapper;
         _contactService = new GenericService<Contact, IRepository<Contact>>(unitOfWork.ContactRepository, unitOfWork);
+        _accountService = accountService;
     }
     
     // GET: api/Contact
@@ -55,8 +58,11 @@ public class ContactController : ControllerBase
         if (invalidContact) 
             return BadRequest("Invalid model provided for a new contact to be created");
         
-        var contact = await _contactService.AddAsync(_mapper.Map<Contact>(newContact));
+        var account = await _accountService.GetUserFromAuth0Id(User.Identity.Name);
+        var mappedContact = _mapper.Map<Contact>(newContact);
+        mappedContact.AuthorId = account.Id;
         
+        var contact = await _contactService.AddAsync(mappedContact);
         return CreatedAtRoute(
             "GetContactById", 
             new { id = contact.Id }, 

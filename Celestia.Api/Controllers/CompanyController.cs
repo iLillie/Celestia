@@ -16,11 +16,12 @@ public class CompanyController : ControllerBase
 {
     private readonly GenericService<Company, IRepository<Company>> _companyService;
     private readonly IMapper _mapper;
-
-    public CompanyController(IMapper mapper, IUnitOfWork unitOfWork)
+    private readonly IAccountService _accountService;
+    public CompanyController(IMapper mapper, IUnitOfWork unitOfWork, IAccountService accountService)
     {
         _mapper = mapper;
         _companyService = new GenericService<Company, IRepository<Company>>(unitOfWork.CompanyRepository, unitOfWork);
+        _accountService = accountService;
     }
 
     // GET: api/company
@@ -57,7 +58,11 @@ public class CompanyController : ControllerBase
         if (invalidCompany) 
             return BadRequest("Invalid model provided for a new company to be created");
 
-        var company = await _companyService.AddAsync(_mapper.Map<Company>(newCompany));
+        
+        var account = await _accountService.GetUserFromAuth0Id(User.Identity.Name);
+        var mappedCompany = _mapper.Map<Company>(newCompany);
+        mappedCompany.AuthorId = account.Id;
+        var company = await _companyService.AddAsync(mappedCompany);
         
         return CreatedAtRoute(
             "GetCompanyById", 

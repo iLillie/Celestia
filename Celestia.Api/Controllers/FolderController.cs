@@ -1,4 +1,5 @@
 using AutoMapper;
+using Celestia.Api.Interfaces;
 using Celestia.Api.Services;
 using Celestia.Data;
 using Celestia.Models;
@@ -14,16 +15,17 @@ public class FolderController : ControllerBase
 {
     private readonly GenericService<Folder, IRepository<Folder>> _folderService;
     private readonly IMapper _mapper;
+    private readonly IAccountService _accountService;
 
-    public FolderController(IMapper mapper, IUnitOfWork unitOfWork)
+    public FolderController(IMapper mapper, IUnitOfWork unitOfWork, IAccountService accountService)
     {
         _mapper = mapper;
         _folderService = new GenericService<Folder, IRepository<Folder>>(unitOfWork.FolderRepository, unitOfWork);
+        _accountService = accountService;
     }
     
     // GET: api/folder
     [HttpGet]
-    [Authorize(Policy = "ReadAll")]
     public async Task<ActionResult<IEnumerable<FolderResultDto>>> GetAll()
     {
         var folderList = await _folderService.GetAllAsync();
@@ -55,7 +57,8 @@ public class FolderController : ControllerBase
         if (invalidFolder) 
             return BadRequest("Invalid model provided for a new folder to be created");
         var folderMap = _mapper.Map<Folder>(newFolder);
-        folderMap.AuthorId = 1;
+        var account = await _accountService.GetUserFromAuth0Id(User.Identity.Name);
+        folderMap.AuthorId = account.Id;
         var folder = await _folderService.AddAsync(folderMap);
         
         return CreatedAtRoute(

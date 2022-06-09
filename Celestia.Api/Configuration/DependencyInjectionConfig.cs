@@ -11,6 +11,7 @@ public static class DependencyInjectionConfig
         services.AddDbContext<ApplicationDbContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IAccountService, AccountService>();
 
         return services;
     }
